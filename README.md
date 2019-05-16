@@ -1,4 +1,4 @@
-# CopyFilesToFolders
+# Copy Files To Folders
 A Python program to copy all subject files (or a select list of subject files) from one location to another and create certain subfolders if necessary
 (only works for the CCDG clinic at the University of Pittsburgh)
 
