@@ -1,7 +1,7 @@
 # Copy Files To Folders
 A Python program to copy all subject files (or a select list of subject files) from one location to another and create certain subfolders if necessary
 
-(only works for 2 studies at the CCDG clinic at the University of Pittsburgh)
+(customized to work for studies at the CCDG clinic at the University of Pittsburgh)
 
 # What I Learned
 * Design a UI using tkinter and the ttk theme widgets
