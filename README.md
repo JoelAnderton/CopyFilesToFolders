@@ -8,4 +8,4 @@ A Python program to copy all subject files (or a select list of subject files) f
 * Practice using the functions in the shutil module to copy files
 * Practice using the functions in the os module to manipulate file locations 
 * Use a .csv file to limit the subject files that can be moved (This way if a random list of subjects is given, the program will select out only those subject files to move and not everyone)
-* Compile as an .exe for both macOS and Windows. Tested using pyinstaller (for Windows) and py2app (for Mac).
+* Compile as an .exe for both macOS and Windows. Tested using pyinstaller and py2exe (for Windows) and py2app (for Mac).
