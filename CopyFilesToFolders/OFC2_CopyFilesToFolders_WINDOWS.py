@@ -499,6 +499,17 @@ getDataButton3 = ttk.Button(frame, text='Browse...', command=get_csv, width=10)
 getDataButton3.pack(side=LEFT)
 frame.pack()
 
+# Specify Filename convention box
+frame = Frame(root)
+specifyBoxTitle = ttk.Label(frame, text='Specify any specific file naming convention: ')
+specifyBoxTitle.pack()
+specifyBoxLabel = ttk.Label(frame, text='Example: _Clean, .txt, .obj ...')
+specifyBoxLabel.pack(side=LEFT)
+specifyBoxEntry = ttk.Entry(frame, textvariable=specifyBox)
+specifyBoxEntry.pack(side=LEFT)
+frame.pack()
+
+
 # Submit button
 frame = Frame()
 submitButton = ttk.Button(frame, text='Submit', command=get_submit, width=10)
