@@ -426,7 +426,7 @@ def get_submit(event=None):
 root = Tk()
 #root.state('zoomed')
 root.title('OFC2 Copy Files To Folders')
-root.geometry('400x375+500+200')
+root.geometry('450x400+500+200')
 
 # creates variables in window
 from_folder = StringVar()
@@ -488,9 +488,14 @@ imagesCheckBut = ttk.Checkbutton(frame, text='Make Images subfolders     ', vari
 imagesCheckBut.pack()
 frame.pack()
 
+frame = Frame(root)
+lines = ttk.Label(frame, text='')
+lines.pack()
+frame.pack()
+
 # .CSV file
 frame = Frame(root)
-limitTitle = ttk.Label(frame, text='Use a .csv file to limit StudyIDs:')
+limitTitle = ttk.Label(frame, text='Use a .csv file to limit StudyIDs: ')
 limitTitle.pack()
 limitLabel = ttk.Label(frame, text='.CSV path:')
 limitLabel.pack(side=LEFT)
@@ -500,11 +505,16 @@ getDataButton3 = ttk.Button(frame, text='Browse...', command=get_csv, width=10)
 getDataButton3.pack(side=LEFT)
 frame.pack()
 
+frame = Frame(root)
+lines = ttk.Label(frame, text='')
+lines.pack()
+frame.pack()
+
 # Specify Filename convention box
 frame = Frame(root)
-specifyBoxTitle = ttk.Label(frame, text='Specify any specific file naming convention: ')
+specifyBoxTitle = ttk.Label(frame, text='Specify any specific file naming convention or file extensions: ')
 specifyBoxTitle.pack()
-specifyBoxLabel = ttk.Label(frame, text='Example: _Clean, .txt, .obj ...')
+specifyBoxLabel = ttk.Label(frame, text='Example: "_Clean," ".txt", ".obj" etc...')
 specifyBoxLabel.pack()
 specifyBoxEntry = ttk.Entry(frame, textvariable=specifyBox)
 specifyBoxEntry.pack()
