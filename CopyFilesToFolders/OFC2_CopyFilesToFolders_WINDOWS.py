@@ -426,12 +426,13 @@ def get_submit(event=None):
 root = Tk()
 #root.state('zoomed')
 root.title('OFC2 Copy Files To Folders')
-root.geometry('400x300+200+250')
+root.geometry('400x375+500+200')
 
 # creates variables in window
 from_folder = StringVar()
 to_folder = StringVar()
 csv_path  = StringVar()
+specifyBox = StringVar()
 libCheck = BooleanVar()
 siteCheck = BooleanVar()
 indivCheck = BooleanVar()
@@ -483,7 +484,7 @@ frame.pack()
 
 # Make Images folder
 frame = Frame(root)
-imagesCheckBut = ttk.Checkbutton(frame, text='Make Images subfolders      ', variable=imagesCheck)
+imagesCheckBut = ttk.Checkbutton(frame, text='Make Images subfolders     ', variable=imagesCheck)
 imagesCheckBut.pack()
 frame.pack()
 
@@ -504,9 +505,9 @@ frame = Frame(root)
 specifyBoxTitle = ttk.Label(frame, text='Specify any specific file naming convention: ')
 specifyBoxTitle.pack()
 specifyBoxLabel = ttk.Label(frame, text='Example: _Clean, .txt, .obj ...')
-specifyBoxLabel.pack(side=LEFT)
+specifyBoxLabel.pack()
 specifyBoxEntry = ttk.Entry(frame, textvariable=specifyBox)
-specifyBoxEntry.pack(side=LEFT)
+specifyBoxEntry.pack()
 frame.pack()
 
 
