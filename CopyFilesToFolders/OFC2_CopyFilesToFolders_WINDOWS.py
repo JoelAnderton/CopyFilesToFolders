@@ -489,7 +489,7 @@ imagesCheckBut.pack()
 frame.pack()
 
 frame = Frame(root)
-lines = ttk.Label(frame, text='')
+lines = Label(frame, text='')
 lines.pack()
 frame.pack()
 
@@ -506,7 +506,7 @@ getDataButton3.pack(side=LEFT)
 frame.pack()
 
 frame = Frame(root)
-lines = ttk.Label(frame, text='')
+lines = Label(frame, text='')
 lines.pack()
 frame.pack()
 
