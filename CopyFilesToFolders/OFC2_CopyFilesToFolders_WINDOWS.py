@@ -103,7 +103,7 @@ def get_submit(event=None):
         os.chdir(to_folder)
         for file in files:
             try:
-                if limitEntry.get() == '': # is the limiting .csv file bing used
+                if limitEntry.get() == '' and specifyBox == '': # is the limiting .csv file being used
                     # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing 
                     pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
                     match = re.findall(pattern, file)
@@ -111,7 +111,8 @@ def get_submit(event=None):
                         file = file[0:2].upper() + file[2:]
                     else:
                         pass
-                else:
+
+                elif limitEntry.get() != '' and specifyBox == '':
                     if file[0:7].upper() in StudyID_list_from_csv:
                         # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing 
                         pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
@@ -123,6 +124,21 @@ def get_submit(event=None):
                         
                     else: # if the limiting .csv file is not being used, then continue
                         continue
+
+                elif limitEntry.get() == '' and specifyBox != '':
+                    if file.upper() in specifyBox.upper():
+                        pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
+                        match_ID = re.findall(pattern, file)
+                        match_specifyBox = re.findall(specifyBox, file)
+                        if match_ID and match_specifyBox:
+                            file = file[0:2].upper() + file[2:]
+
+                elif limitEntry.get() != '' and specifyBox != '':
+                    # TODO - if both limitEntry and SpecifyBox are not used
+                    pass
+
+
+
 
 
                 print('Creating: {}'.format(file))
