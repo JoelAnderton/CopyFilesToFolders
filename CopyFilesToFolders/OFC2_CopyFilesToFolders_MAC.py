@@ -22,6 +22,10 @@
 #       - Added option to create an "Image" subfolder
 #       - Made it so that StudyIDs in the filename become uppercase when the file moves
 #       - Does not matter if the StudyIDs in a .csv file has StudyIDs as upper or lower case
+#    6/3/2019
+#       - Added the option to specify file naming conventions or file extenstions
+#       - Create a log of all file  moves that gets appened everytime the program is run
+#       - Create an option to create an indiviudal log for an individual run of the program
 #
 #########################################################################################
 
@@ -102,6 +106,11 @@ def get_about(event=None):
       a .csv file has StudyIDs as upper 
       or lower case
 
+    6/3/2019 - v. 3.0:
+    - Added the option to specify file naming conventions or file 
+      extenstions
+    - Create a log of all file  moves
+
     ''')
 
 
@@ -113,25 +122,53 @@ def get_submit(event=None):
         os.chdir(to_folder)
         for file in files:
             try:
-                if limitEntry.get() == '':  # is the limiting .csv file bing used
-                    # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing
+               # limit and sepecifyBox are both null
+                if limitEntry.get() == '' and specifyBox.get() == '': # is the limiting .csv file being used
+                    # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing 
                     pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
                     match = re.findall(pattern, file)
                     if match:
                         file = file[0:2].upper() + file[2:]
                     else:
-                        pass
-                else:
+                        continue
+                 
+                # limit is not null and and sepecifyBox is null
+                elif limitEntry.get() != '' and specifyBox.get() == '':
                     if file[0:7].upper() in StudyID_list_from_csv:
-                        # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing
+                        # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing 
                         pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
                         match = re.findall(pattern, file)
                         if match:
                             file = file[0:2].upper() + file[2:]
                         else:
-                            pass
+                            continue 
+                    else:
+                        continue
+                    # else: # if the limiting .csv file is not being used, then continue
+                       # continue
 
-                    else:  # if the limiting .csv file is not being used, then continue
+                # limit is null and sepecifyBox is not null
+                elif limitEntry.get() == '' and specifyBox.get() != '':
+                    if specifyBox.get().upper() in file.upper():
+                        pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
+                        match = re.findall(pattern, file)
+                        if match :
+                            file = file[0:2].upper() + file[2:]
+                        else: 
+                            continue
+                    else:
+                        continue
+
+                # both limit and specifyBox are not null
+                elif limitEntry.get() != '' and specifyBox.get() != '':
+                    if file[0:7].upper() in StudyID_list_from_csv and specifyBox.get().upper() in file.upper():
+                        pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
+                        match = re.findall(pattern, file)
+                        if match:
+                           file = file[0:2].upper() + file[2:]
+                        else: 
+                            continue
+                    else:
                         continue
 
                 print('Creating: {}'.format(file))
@@ -505,14 +542,14 @@ def get_submit(event=None):
 
 # Creates main window
 root = Tk()
-root.state('zoomed')
-root.title('OFC2 Copy Files To Folders')
-root.geometry('400x300+500+200')
+root.title('OFC2 Copy Files To Folders v. 3.0')
+root.geometry('450x420+500+200')
 
 # creates variables in window
 from_folder = StringVar()
 to_folder = StringVar()
 csv_path  = StringVar()
+specifyBox = StringVar()
 libCheck = BooleanVar()
 siteCheck = BooleanVar()
 indivCheck = BooleanVar()
@@ -568,6 +605,11 @@ imageCheckBut = Checkbutton(frame, text='Make Image subfolders      ', variable=
 imageCheckBut.pack()
 frame.pack()
 
+frame = Frame(root)
+lines = Label(frame, text='')
+lines.pack()
+frame.pack()
+
 # .CSV file
 frame = Frame(root)
 limitTitle = Label(frame, text='Use a .csv file to limit StudyIDs:')
@@ -578,6 +620,21 @@ limitEntry = Entry(frame, textvariable=csv_path)
 limitEntry.pack(side=LEFT)
 getDataButton3 = Button(frame, text='Browse...', command=get_csv, width=10)
 getDataButton3.pack(side=LEFT)
+frame.pack()
+
+frame = Frame(root)
+lines = Label(frame, text='')
+lines.pack()
+frame.pack()
+
+# Specify Filename convention box
+frame = Frame(root)
+specifyBoxTitle = Label(frame, text='Specify any specific file naming conventions or file extensions: ')
+specifyBoxTitle.pack()
+specifyBoxLabel = Label(frame, text='Example: _Clean, .txt, .obj etc...')
+specifyBoxLabel.pack()
+specifyBoxEntry = Entry(frame, textvariable=specifyBox)
+specifyBoxEntry.pack()
 frame.pack()
 
 # Submit button

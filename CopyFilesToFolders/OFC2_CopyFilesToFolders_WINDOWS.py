@@ -22,6 +22,10 @@
 #       - Added option to create an "Images" subfolder
 #       - Made it so that StudyIDs in the filename become uppercase when the file moves
 #       - Does not matter if the StudyIDs in a .csv file has StudyIDs as upper or lower case
+#    6/3/2019
+#       - Added the option to specify file naming conventions or file extenstions
+#       - Create a log of all file  moves that gets appened everytime the program is run
+#       - Create an option to create an indiviudal log for an individual run of the program
 #       
 #########################################################################################
 
@@ -71,7 +75,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     OFC2 Copy Files to Folders
-    version: 2.3
+    version: 3.0
     
     Only works with files with OFC2 style StudyIDs
     The first 7 characters of the file must be the StudyID
@@ -92,6 +96,10 @@ def get_about(event=None):
     - Does not matter if the StudyIDs in a .csv file has StudyIDs as upper 
       or lower case
 
+    6/3/2019 - v. 3.0:
+    - Added the option to specify file naming conventions or file 
+      extenstions
+    - Create a log of all file  moves
     ''')
 
 
@@ -103,16 +111,18 @@ def get_submit(event=None):
         os.chdir(to_folder)
         for file in files:
             try:
-                if limitEntry.get() == '' and specifyBox == '': # is the limiting .csv file being used
+                # limit and sepecifyBox are both null
+                if limitEntry.get() == '' and specifyBox.get() == '': # is the limiting .csv file being used
                     # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing 
                     pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
                     match = re.findall(pattern, file)
                     if match:
                         file = file[0:2].upper() + file[2:]
                     else:
-                        pass
-
-                elif limitEntry.get() != '' and specifyBox == '':
+                        continue
+                 
+                # limit is not null and and sepecifyBox is null
+                elif limitEntry.get() != '' and specifyBox.get() == '':
                     if file[0:7].upper() in StudyID_list_from_csv:
                         # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing 
                         pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
@@ -120,27 +130,36 @@ def get_submit(event=None):
                         if match:
                             file = file[0:2].upper() + file[2:]
                         else:
-                            pass
-                        
-                    else: # if the limiting .csv file is not being used, then continue
+                            continue 
+                    else:
+                        continue
+                    # else: # if the limiting .csv file is not being used, then continue
+                       # continue
+
+                # limit is null and sepecifyBox is not null
+                elif limitEntry.get() == '' and specifyBox.get() != '':
+                    if specifyBox.get().upper() in file.upper():
+                        pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
+                        match = re.findall(pattern, file)
+                        if match :
+                            file = file[0:2].upper() + file[2:]
+                        else: 
+                            continue
+                    else:
                         continue
 
-                elif limitEntry.get() == '' and specifyBox != '':
-                    if file.upper() in specifyBox.upper():
+                # both limit and specifyBox are not null
+                elif limitEntry.get() != '' and specifyBox.get() != '':
+                    if file[0:7].upper() in StudyID_list_from_csv and specifyBox.get().upper() in file.upper():
                         pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
-                        match_ID = re.findall(pattern, file)
-                        match_specifyBox = re.findall(specifyBox, file)
-                        if match_ID and match_specifyBox:
-                            file = file[0:2].upper() + file[2:]
-
-                elif limitEntry.get() != '' and specifyBox != '':
-                    # TODO - if both limitEntry and SpecifyBox are not used
-                    pass
-
-
-
-
-
+                        match = re.findall(pattern, file)
+                        if match:
+                           file = file[0:2].upper() + file[2:]
+                        else: 
+                            continue
+                    else:
+                        continue
+                    
                 print('Creating: {}'.format(file))
 
                 # if Site, Library, and Individual all checked
@@ -441,8 +460,8 @@ def get_submit(event=None):
 # Creates main window
 root = Tk()
 #root.state('zoomed')
-root.title('OFC2 Copy Files To Folders')
-root.geometry('450x400+500+200')
+root.title('OFC2 Copy Files To Folders v. 3.0')
+root.geometry('450x420+500+200')
 
 # creates variables in window
 from_folder = StringVar()
@@ -482,19 +501,19 @@ frame.pack()
 
 # Make site folders checkbox
 frame = Frame(root)
-siteCheckBut = ttk.Checkbutton(frame, text='Make Site subfolders          ', variable=siteCheck)
+siteCheckBut = ttk.Checkbutton(frame, text='Make Site subfolders           ', variable=siteCheck)
 siteCheckBut.pack()
 frame.pack()
 
 # Make Library folders checkbox
 frame = Frame(root)
-libCheckBut = ttk.Checkbutton(frame, text='Make Library subfolders     ', variable=libCheck)
+libCheckBut = ttk.Checkbutton(frame, text='Make Library subfolders      ', variable=libCheck)
 libCheckBut.pack()
 frame.pack()
 
 # Make Individual folder
 frame = Frame(root)
-indivCheckBut = ttk.Checkbutton(frame, text='Make Individual subfolders', variable=indivCheck)
+indivCheckBut = ttk.Checkbutton(frame, text='Make Individual subfolders ', variable=indivCheck)
 indivCheckBut.pack()
 frame.pack()
 
@@ -528,14 +547,13 @@ frame.pack()
 
 # Specify Filename convention box
 frame = Frame(root)
-specifyBoxTitle = ttk.Label(frame, text='Specify any specific file naming convention or file extensions: ')
+specifyBoxTitle = ttk.Label(frame, text='Specify any specific file naming conventions or file extensions: ')
 specifyBoxTitle.pack()
-specifyBoxLabel = ttk.Label(frame, text='Example: "_Clean," ".txt", ".obj" etc...')
+specifyBoxLabel = ttk.Label(frame, text='Example: _Clean, .txt, .obj etc...')
 specifyBoxLabel.pack()
 specifyBoxEntry = ttk.Entry(frame, textvariable=specifyBox)
 specifyBoxEntry.pack()
 frame.pack()
-
 
 # Submit button
 frame = Frame()
@@ -556,6 +574,4 @@ closeButton.pack()
 frame.pack()
 
 root.mainloop()
-
-
 
