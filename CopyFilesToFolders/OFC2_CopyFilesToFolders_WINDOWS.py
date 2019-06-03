@@ -35,10 +35,12 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter.filedialog import askdirectory
 from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import asksaveasfile
 import os
 import shutil
 import csv
 import re
+import datetime
 
 # Gets data from the "From here" text box
 def get_fromData(event=None):
@@ -68,6 +70,19 @@ def get_csv(event=None):
             for rowDict in reader:
                 StudyID = rowDict[0].upper() # if the StudyID is typed in lowercase, this changes it to uppercase
                 StudyID_list_from_csv.append(StudyID)
+
+# Create a log file
+def create_log(moved_files):
+    with asksaveasfile(mode='w', defaultextension=".csv") as create_csv:
+        print('Created file: ', create_csv)
+        create_csv.writelines('Date, StudyID, From Here, To Here')
+        create_csv.writelines('\n')
+        for file in moved_files:
+            print(file)
+            create_csv.writelines(file)
+            create_csv.writelines('\n')
+     
+        
 
 # Creates the "About" window
 def get_about(event=None):
@@ -106,9 +121,10 @@ def get_about(event=None):
 def get_submit(event=None):
     
     site_dic = {'CO':r'Colombia', 'LC': r'Lancaster', 'NG':r'Nigeria', 'PH':r'Philippines', 'FC':r'Pittsburgh', 'PR': r'Puerto Rico'}
+    moved_files = []
     unable_to_move =[]
     for root, dirs, files in os.walk(from_folder):
-        os.chdir(to_folder)
+       # os.chdir(to_folder)
         for file in files:
             try:
                 # limit and sepecifyBox are both null
@@ -169,24 +185,24 @@ def get_submit(event=None):
                         
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                        os.chdir(os.path.join(to_folder))
+                        # os.chdir(os.path.join(to_folder))
                         os.makedirs(os.path.join(to_folder,site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
                         
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))==False:
-                        os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper())))
+                        # os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper())))
                         os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file)) 
                         
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))==False:
-                        os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))
+                        # os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))
                         os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))==False:
-                        os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))
+                       # os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))
                         os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
                         
@@ -200,12 +216,12 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, r'Library'))==False:
-                            os.chdir(os.path.join(to_folder))
+                          #  os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images'))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images', file))
                          
                     elif os.path.exists(os.path.join(to_folder, r'Library', file[0:7].upper())==False):
-                            os.chdir(os.path.join(to_folder,  r'Library'))
+                          #  os.chdir(os.path.join(to_folder,  r'Library'))
                             os.makedirs(os.path.join(to_folder,  r'Library', file[0:7].upper(), r'Images'))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  r'Library', file[0:7].upper(), r'Images', file))
 
@@ -219,12 +235,12 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                            os.chdir(os.path.join(to_folder))
+                          #  os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images'))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images', file))
                          
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper())==False):
-                            os.chdir(os.path.join(to_folder,  site_dic.get(file[0:2].upper())))
+                          #  os.chdir(os.path.join(to_folder,  site_dic.get(file[0:2].upper())))
                             os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images'))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images', file))
 
@@ -238,12 +254,12 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                            os.chdir(os.path.join(to_folder))
+                          #  os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images'))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
                          
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library')==False):
-                            os.chdir(os.path.join(to_folder,  site_dic.get(file[0:2].upper())))
+                          #  os.chdir(os.path.join(to_folder,  site_dic.get(file[0:2].upper())))
                             os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), r'Library', r'Images'))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
 
@@ -257,7 +273,7 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                            os.chdir(os.path.join(to_folder))
+                          #  os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images'))  
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
 
@@ -271,7 +287,7 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:7].upper(), r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, file[0:7].upper()))==False:
-                            os.chdir(os.path.join(to_folder))
+                           # os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, file[0:7].upper(), r'Images'))  
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:7].upper(), r'Images', file))
 
@@ -285,7 +301,7 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, r'Library', r'Images'))==False:
-                            os.chdir(os.path.join(to_folder))
+                          #  os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, r'Library', r'Images')) 
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', r'Images', file))
 
@@ -299,7 +315,7 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, r'Images'))==False:
-                        os.chdir(os.path.join(to_folder))
+                      #  os.chdir(os.path.join(to_folder))
                         os.makedirs(os.path.join(to_folder, r'Images')) 
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
      
@@ -316,19 +332,19 @@ def get_submit(event=None):
                     
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                            os.chdir(os.path.join(to_folder))
+                          #  os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file))
                         
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))==False:
-                            os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper())))
+                           # os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper())))
                             os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file)) 
                         
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper())==False):
-                            os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))
+                          #  os.chdir(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))
                             os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file))
                         
@@ -342,12 +358,12 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file[0:7].upper(), file))
                     
                     elif os.path.exists(os.path.join(to_folder, r'Library'))==False:
-                            os.chdir(os.path.join(to_folder))
+                          #  os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, r'Library', file[0:7].upper()))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file[0:7].upper(), file))
                          
                     elif os.path.exists(os.path.join(to_folder, r'Library', file[0:7].upper())==False):
-                            os.chdir(os.path.join(to_folder,  r'Library'))
+                           # os.chdir(os.path.join(to_folder,  r'Library'))
                             os.makedirs(os.path.join(to_folder,  r'Library', file[0:7].upper()))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  r'Library', file[0:7].upper(), file))
 
@@ -361,12 +377,12 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                            os.chdir(os.path.join(to_folder))
+                          #  os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper()))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), file))
                          
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper())==False):
-                            os.chdir(os.path.join(to_folder,  site_dic.get(file[0:2].upper())))
+                          #  os.chdir(os.path.join(to_folder,  site_dic.get(file[0:2].upper())))
                             os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), file[0:7].upper()))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), file))
 
@@ -380,12 +396,12 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                            os.chdir(os.path.join(to_folder))
+                         #   os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
                          
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library')==False):
-                            os.chdir(os.path.join(to_folder,  site_dic.get(file[0:2].upper())))
+                          #  os.chdir(os.path.join(to_folder,  site_dic.get(file[0:2].upper())))
                             os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), r'Library'))
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  site_dic.get(file[0:2].upper()), r'Library', file))
 
@@ -399,7 +415,7 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                            os.chdir(os.path.join(to_folder))
+                          #  os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper())))            
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file))
 
@@ -413,7 +429,7 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:7].upper(), file))
                     
                     elif os.path.exists(os.path.join(to_folder, file[0:7].upper()))==False:
-                            os.chdir(os.path.join(to_folder))
+                         #   os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, file[0:7].upper()))            
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:7].upper(), file))
 
@@ -427,7 +443,7 @@ def get_submit(event=None):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file))
                     
                     elif os.path.exists(os.path.join(to_folder, r'Library'))==False:
-                            os.chdir(os.path.join(to_folder))
+                         #   os.chdir(os.path.join(to_folder))
                             os.makedirs(os.path.join(to_folder, r'Library'))            
                             shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file))
 
@@ -443,9 +459,20 @@ def get_submit(event=None):
                     print('Error 16 - Check all possiblities for site, Library, individual folder')
                     continue
 
+                # Continuous log -- creates a log and continues to add to it everytime the program runs
+                moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' +  os.path.join(to_folder, file))
+                if os.path.exists('log.csv') == False:
+                    with open('log.csv', 'w+') as log:
+                        log.writelines('Date, StudyID, From Here, To Here')
+                        log.writelines('\n')
+
+                with open('log.csv', 'a') as log:
+                    log.writelines(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' +  os.path.join(to_folder, file))
+                    log.writelines('\n')
+               
             except:
                 unable_to_move.append(file)
-    
+        
     print()
     if unable_to_move != []:
         print('*******************************************')
@@ -455,6 +482,10 @@ def get_submit(event=None):
             messagebox.showwarning('Unable to move file', 'Unable to move file: \n' + file)
 
     messagebox.showinfo('Completed', 'Completed')
+
+    if logCheck.get() == True:
+        create_log(moved_files)
+
     #print('Done!!')
 
 # Creates main window
@@ -472,6 +503,7 @@ libCheck = BooleanVar()
 siteCheck = BooleanVar()
 indivCheck = BooleanVar()
 imagesCheck = BooleanVar()
+logCheck = BooleanVar()
 
 # Title
 frame = Frame(root)
@@ -553,6 +585,12 @@ specifyBoxLabel = ttk.Label(frame, text='Example: _Clean, .txt, .obj etc...')
 specifyBoxLabel.pack()
 specifyBoxEntry = ttk.Entry(frame, textvariable=specifyBox)
 specifyBoxEntry.pack()
+frame.pack()
+
+# Make Log checkbox
+frame = Frame(root)
+logCheckBut = ttk.Checkbutton(frame, text='Create a log file', variable=logCheck)
+logCheckBut.pack()
 frame.pack()
 
 # Submit button
