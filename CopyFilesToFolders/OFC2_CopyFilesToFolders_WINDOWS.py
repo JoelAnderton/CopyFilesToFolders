@@ -48,11 +48,13 @@ def get_fromData(event=None):
     from_folder = askdirectory()
     fromEntry.insert(END, from_folder)
 
+
 # Gets data from the "To here" text box
 def get_toData(event=None):
     global to_folder
     to_folder = askdirectory()
     toEntry.insert(END, to_folder)  
+
 
 # Gets data from the ".CSV" file text box
 def get_csv(event=None):
@@ -69,6 +71,7 @@ def get_csv(event=None):
                 StudyID = rowDict[0].upper() # if the StudyID is typed in lowercase, this changes it to uppercase
                 StudyID_list_from_csv.append(StudyID)
 
+
 # Continuous log
 def contin_log(moved_files):
     if os.path.exists('log.csv') == False:
@@ -81,6 +84,7 @@ def contin_log(moved_files):
             log.writelines(file)
             log.writelines('\n')
 
+
 # Create a log file
 def create_log(moved_files):
     with asksaveasfile(mode='w', defaultextension=".csv") as create_csv:
@@ -89,6 +93,7 @@ def create_log(moved_files):
         for file in moved_files:
             create_csv.writelines(file)
             create_csv.writelines('\n')
+
 
 # Creates the "About" window
 def get_about(event=None):
@@ -123,8 +128,8 @@ def get_about(event=None):
     - Create a log of all file moves
     ''')
 
+
 def get_submit(event=None):
-    
     site_dic = {'CO':r'Colombia', 'LC': r'Lancaster', 'NG':r'Nigeria', 'PH':r'Philippines', 'FC':r'Pittsburgh', 'PR': r'Puerto Rico',
                 'BE':r'Beijing', 'CL':r'Colorado', 'DK':r'Denmark', 'GF':r'Guatemala', 'GW':r'Iowa(George Webby)', 'HF':r'Hungery', 'IN':r'India', 
                 'MF':r'Madrid', 'MV':r'Madrid', 'PT':r'Patagonia', 'SF':r'St.Louis', 'SH':r'Shanghai', 'TK':r'Turkey', 'TW':r'Twinsburg', 'TX':r'Texas'}
@@ -496,7 +501,6 @@ def get_submit(event=None):
 
 # Creates main window
 root = Tk()
-#root.state('zoomed')
 root.title('OFC2 Copy Files To Folders v. 3.0')
 root.geometry('450x420+500+200')
 
