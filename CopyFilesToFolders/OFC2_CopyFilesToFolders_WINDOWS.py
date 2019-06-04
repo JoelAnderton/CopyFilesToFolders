@@ -75,11 +75,11 @@ def get_csv(event=None):
 # Continuous log
 def contin_log(moved_files):
     if os.path.exists('log.csv') == False:
-        with open('log.csv', 'w+') as log:
+        with open('log.csv', 'a+') as log:
             log.writelines('Date, StudyID, From Here, To Here')
             log.writelines('\n')
 
-    with open('log.csv', 'a') as log:
+    with open('log.csv', 'a+') as log:
         for file in moved_files:
             log.writelines(file)
             log.writelines('\n')
@@ -87,7 +87,7 @@ def contin_log(moved_files):
 
 # Create a log file
 def create_log(moved_files):
-    with asksaveasfile(mode='w', defaultextension=".csv") as create_csv:
+    with asksaveasfile(mode='a+', defaultextension=".csv") as create_csv:
         create_csv.writelines('Date, StudyID, From Here, To Here')
         create_csv.writelines('\n')
         for file in moved_files:
