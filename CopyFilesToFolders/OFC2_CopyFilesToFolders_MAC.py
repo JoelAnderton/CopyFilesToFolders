@@ -502,7 +502,7 @@ def get_submit(event=None):
 # Creates main window
 root = Tk()
 root.title('OFC2 Copy Files To Folders v. 3.0')
-root.geometry('450x420+500+200')
+root.geometry('450x450+500+200')
 
 # creates variables in window
 from_folder = StringVar()
