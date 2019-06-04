@@ -145,17 +145,19 @@ def get_submit(event=None):
                     match = re.findall(pattern, file)
                     if match:
                         file = file[0:2].upper() + file[2:]
+                        indiv_folder = match[0]
                     else:
                         continue
                  
                 # limit is not null and and specifyBox is null
                 elif limitEntry.get() != '' and specifyBox.get() == '':
-                    if file[0:7].upper() in StudyID_list_from_csv:
+                    if (file[0:7].upper() in StudyID_list_from_csv) or (file[0:6].upper() in StudyID_list_from_csv):
                         # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing 
                         pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
                         match = re.findall(pattern, file)
                         if match:
                             file = file[0:2].upper() + file[2:]
+                            indiv_folder = match[0]
                         else:
                             continue 
                     else:
@@ -168,6 +170,7 @@ def get_submit(event=None):
                         match = re.findall(pattern, file)
                         if match :
                             file = file[0:2].upper() + file[2:]
+                            indiv_folder = match[0]
                         else: 
                             continue
                     else:
@@ -175,11 +178,12 @@ def get_submit(event=None):
 
                 # both limit and specifyBox are not null
                 elif limitEntry.get() != '' and specifyBox.get() != '':
-                    if file[0:7].upper() in StudyID_list_from_csv and specifyBox.get().upper() in file.upper():
+                    if (file[0:7].upper() in StudyID_list_from_csv and specifyBox.get().upper() in file.upper()) or (file[0:6].upper() in StudyID_list_from_csv and specifyBox.get().upper() in file.upper()):
                         pattern = r'[a-zA-Z][a-zA-z][0-9]{4,5}'
                         match = re.findall(pattern, file)
                         if match:
                            file = file[0:2].upper() + file[2:]
+                           indiv_folder = match[0]
                         else: 
                             continue
                     else:
@@ -189,29 +193,29 @@ def get_submit(event=None):
 
                 # if Site, Library, and Individual all checked
                 if siteCheck.get() and libCheck.get() and indivCheck.get() and imagesCheck.get() and imagesCheck.get():
-                    if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images')):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
+                    if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images')):
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                        os.makedirs(os.path.join(to_folder,site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
+                        os.makedirs(os.path.join(to_folder,site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images'))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))==False:
-                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file)) 
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
+                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images'))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file)) 
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
 
-                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))==False:
-                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
+                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder))==False:
+                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images'))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
 
-                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))==False:
-                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), r'Images', file))
+                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images'))==False:
+                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images'))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
                         
                     else:
                         print('Error 1 -  Check where site, library, and individual folder are all checked')
@@ -219,21 +223,21 @@ def get_submit(event=None):
                  
                 # if Library, and Individual checked    
                 elif siteCheck.get()==False and libCheck.get() and indivCheck.get() and imagesCheck.get():
-                    if os.path.exists(os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images')):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images', file))
+                    if os.path.exists(os.path.join(to_folder, r'Library', indiv_folder, r'Images')):
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', indiv_folder, r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, r'Library'))==False:
                           #  os.chdir(os.path.join(to_folder))
-                            os.makedirs(os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images'))
-                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images', file))
-                            moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images', file))
+                            os.makedirs(os.path.join(to_folder, r'Library', indiv_folder, r'Images'))
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', indiv_folder, r'Images', file))
+                            moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', indiv_folder, r'Images', file))
                          
-                    elif os.path.exists(os.path.join(to_folder, r'Library', file[0:7].upper())==False):
+                    elif os.path.exists(os.path.join(to_folder, r'Library', indiv_folder)==False):
                           #  os.chdir(os.path.join(to_folder,  r'Library'))
-                            os.makedirs(os.path.join(to_folder,  r'Library', file[0:7].upper(), r'Images'))
-                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  r'Library', file[0:7].upper(), r'Images', file))
-                            moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file[0:7].upper(), r'Images', file))
+                            os.makedirs(os.path.join(to_folder,  r'Library', indiv_folder, r'Images'))
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  r'Library', indiv_folder, r'Images', file))
+                            moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', indiv_folder, r'Images', file))
 
                     else:
                         print('Error 2 -  Check where site=False, library=True, and indivudal=True')
@@ -241,19 +245,19 @@ def get_submit(event=None):
                  
                 # if Site and Individual all checked    
                 elif siteCheck.get() and libCheck.get()==False and indivCheck.get() and imagesCheck.get():
-                    if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images')):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images', file))
+                    if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images')):
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images', file))
+                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images'))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
                          
-                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper())==False):
-                        os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), r'Images', file))
+                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder)==False):
+                        os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), indiv_folder, r'Images'))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
 
                     else:
                         print('Error 3 -  Check where site=True, library=False, and indivudal=True')
@@ -263,17 +267,17 @@ def get_submit(event=None):
                 elif siteCheck.get() and libCheck.get() and indivCheck.get()==False and imagesCheck.get():
                     if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images',)):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
                         os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images'))
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
                          
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library')==False):
                         os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), r'Library', r'Images'))
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
 
                     else:
                         print('Error 4 -  Check where site=True, library=True, and indivudal=False')
@@ -283,12 +287,12 @@ def get_submit(event=None):
                 elif siteCheck.get() and libCheck.get()==False and indivCheck.get()==False and imagesCheck.get():
                     if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper(), r'Images'))):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
                         os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images'))  
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
 
                     else:
                         print('Error 5 -  Check where site=True, library=False, and indivudal=False')
@@ -296,14 +300,14 @@ def get_submit(event=None):
 
                  # if Individual only checked
                 elif siteCheck.get()==False and libCheck.get()==False and indivCheck.get() and imagesCheck.get():
-                    if os.path.exists(os.path.join(to_folder, file[0:7].upper(), r'Images')):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, file[0:7].upper(), r'Images', file))
+                    if os.path.exists(os.path.join(to_folder, indiv_folder, r'Images')):
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, indiv_folder, r'Images', file))
                     
-                    elif os.path.exists(os.path.join(to_folder, file[0:7].upper()))==False:
-                        os.makedirs(os.path.join(to_folder, file[0:7].upper(), r'Images'))  
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:7].upper(), r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, file[0:7].upper(), r'Images', file))
+                    elif os.path.exists(os.path.join(to_folder, indiv_folder))==False:
+                        os.makedirs(os.path.join(to_folder, indiv_folder, r'Images'))  
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, indiv_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, indiv_folder, r'Images', file))
 
                     else:
                         print('Error 6 -  Check where site=False, library=False, and indivudal=True')
@@ -313,12 +317,12 @@ def get_submit(event=None):
                 elif siteCheck.get()==False and libCheck.get() and indivCheck.get()==False and imagesCheck.get():
                     if os.path.exists(os.path.join(to_folder, r'Library', r'Images')):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', r'Images', file))
                     
                     elif os.path.exists(os.path.join(to_folder, r'Library', r'Images'))==False:
                         os.makedirs(os.path.join(to_folder, r'Library', r'Images')) 
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', r'Images', file))
 
                     else:
                         print('Error 7 -  Check where site=False, library=True, and indivudal=False')
@@ -328,12 +332,12 @@ def get_submit(event=None):
                 elif siteCheck.get()==False and libCheck.get()==False and indivCheck.get()==False and imagesCheck.get():
                     if os.path.exists(os.path.join(to_folder, r'Images')):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, r'Images'))==False:
                         os.makedirs(os.path.join(to_folder, r'Images')) 
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Images', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Images', file))
      
                     else:
                         print('Error 8 -  Check all possiblities for site, Library, individual folder')
@@ -341,24 +345,24 @@ def get_submit(event=None):
 
                 # if Site, Library, and Individual all checked
                 elif siteCheck.get() and libCheck.get() and indivCheck.get() and imagesCheck.get()==False:
-                    if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper())):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file))
+                    if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder)):
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file))
+                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
 
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))==False:
-                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file)) 
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file))
+                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file)) 
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
 
-                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper())==False):
-                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper()))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file[0:7].upper(), file))
+                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder)==False):
+                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
 
                     else:
                         print('Error 9 -  Check where site, library, and individual folder are all checked')
@@ -366,19 +370,19 @@ def get_submit(event=None):
                  
                 # if Library, and Individual checked    
                 elif siteCheck.get()==False and libCheck.get() and indivCheck.get() and imagesCheck.get()==False:
-                    if os.path.exists(os.path.join(to_folder, r'Library', file[0:7].upper())):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file[0:7].upper(), file))
+                    if os.path.exists(os.path.join(to_folder, r'Library', indiv_folder)):
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', indiv_folder, file))
                     
                     elif os.path.exists(os.path.join(to_folder, r'Library'))==False:
-                        os.makedirs(os.path.join(to_folder, r'Library', file[0:7].upper()))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file[0:7].upper(), file))
+                        os.makedirs(os.path.join(to_folder, r'Library', indiv_folder))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', indiv_folder, file))
                          
-                    elif os.path.exists(os.path.join(to_folder, r'Library', file[0:7].upper())==False):
-                        os.makedirs(os.path.join(to_folder,  r'Library', file[0:7].upper()))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  r'Library', file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file[0:7].upper(), file))
+                    elif os.path.exists(os.path.join(to_folder, r'Library', indiv_folder)==False):
+                        os.makedirs(os.path.join(to_folder,  r'Library', indiv_folder))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  r'Library', indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', indiv_folder, file))
 
                     else:
                         print('Error 10 -  Check where site=False, library=True, and indivudal=True')
@@ -386,19 +390,19 @@ def get_submit(event=None):
                  
                 # if Site and Individual all checked    
                 elif siteCheck.get() and libCheck.get()==False and indivCheck.get() and imagesCheck.get()==False:
-                    if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper())):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), file))
+                    if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder)):
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
-                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper()))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), file))
+                        os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
                          
-                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper())==False):
-                        os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), file[0:7].upper()))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file[0:7].upper(), file))
+                    elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder)==False):
+                        os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), indiv_folder))
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
 
                     else:
                         print('Error 11 -  Check where site=True, library=False, and indivudal=True')
@@ -408,17 +412,17 @@ def get_submit(event=None):
                 elif siteCheck.get() and libCheck.get() and indivCheck.get()==False and imagesCheck.get()==False:
                     if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library')):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
                         os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library'))
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
                          
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library')==False):
                         os.makedirs(os.path.join(to_folder,  site_dic.get(file[0:2].upper()), r'Library'))
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder,  site_dic.get(file[0:2].upper()), r'Library', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
 
                     else:
                         print('Error 12 -  Check where site=True, library=True, and indivudal=False')
@@ -428,12 +432,12 @@ def get_submit(event=None):
                 elif siteCheck.get() and libCheck.get()==False and indivCheck.get()==False and imagesCheck.get()==False:
                     if os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper()))):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file))
                     
                     elif os.path.exists(os.path.join(to_folder, site_dic.get(file[0:2].upper())))==False:
                         os.makedirs(os.path.join(to_folder, site_dic.get(file[0:2].upper())))            
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, site_dic.get(file[0:2].upper()), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), file))
 
                     else:
                         print('Error 13 -  Check where site=True, library=False, and indivudal=False')
@@ -441,14 +445,14 @@ def get_submit(event=None):
 
                  # if Individual only checked
                 elif siteCheck.get()==False and libCheck.get()==False and indivCheck.get() and imagesCheck.get()==False:
-                    if os.path.exists(os.path.join(to_folder, file[0:7].upper())):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, file[0:7].upper(), file))
+                    if os.path.exists(os.path.join(to_folder, indiv_folder)):
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, indiv_folder, file))
                     
-                    elif os.path.exists(os.path.join(to_folder, file[0:7].upper()))==False:
-                        os.makedirs(os.path.join(to_folder, file[0:7].upper()))            
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:7].upper(), file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, file[0:7].upper(), file))
+                    elif os.path.exists(os.path.join(to_folder, indiv_folder))==False:
+                        os.makedirs(os.path.join(to_folder, indiv_folder))            
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, indiv_folder, file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, indiv_folder, file))
 
                     else:
                         print('Error 14 -  Check where site=False, library=False, and indivudal=True')
@@ -458,12 +462,12 @@ def get_submit(event=None):
                 elif siteCheck.get()==False and libCheck.get() and indivCheck.get()==False and imagesCheck.get()==False:
                     if os.path.exists(os.path.join(to_folder, r'Library')):
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file))
                     
                     elif os.path.exists(os.path.join(to_folder, r'Library'))==False:
                         os.makedirs(os.path.join(to_folder, r'Library'))            
                         shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Library', file))
-                        moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file))
+                        moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' +  os.path.join(root, file) +', ' + os.path.join(to_folder, r'Library', file))
 
                     else:
                         print('Error 15 -  Check where site=False, library=True, and indivudal=False')
@@ -472,7 +476,7 @@ def get_submit(event=None):
                 # if nothing checked
                 elif siteCheck.get()==False and libCheck.get()==False and indivCheck.get()==False and imagesCheck.get()==False:
                     shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file))
-                    moved_files.append(str(datetime.datetime.now()) + ', ' + file[0:7].upper() +', ' + os.path.join(root, file) +', ' +  os.path.join(to_folder, file))
+                    moved_files.append(str(datetime.datetime.now()) + ', ' + indiv_folder +', ' + os.path.join(root, file) +', ' +  os.path.join(to_folder, file))
      
                 else:
                     print('Error 16 - Check all possiblities for site, Library, individual folder')
@@ -543,7 +547,7 @@ frame.pack()
 
 # Make site folders checkbox
 frame = Frame(root)
-siteCheckBut = Checkbutton(frame, text='Make Site subfolders           ', variable=siteCheck)
+siteCheckBut =Checkbutton(frame, text='Make Site subfolders           ', variable=siteCheck)
 siteCheckBut.pack()
 frame.pack()
 
@@ -555,7 +559,7 @@ frame.pack()
 
 # Make Individual folder
 frame = Frame(root)
-indivCheckBut = Checkbutton(frame, text='Make Individual subfolders ', variable=indivCheck)
+indivCheckBut =Checkbutton(frame, text='Make Individual subfolders ', variable=indivCheck)
 indivCheckBut.pack()
 frame.pack()
 
