@@ -132,7 +132,7 @@ def get_about(event=None):
 def get_submit(event=None):
     site_dic = {'CO':r'Colombia', 'LC': r'Lancaster', 'NG':r'Nigeria', 'PH':r'Philippines', 'FC':r'Pittsburgh', 'PR': r'Puerto Rico',
                 'BE':r'Beijing', 'CL':r'Colorado', 'DK':r'Denmark', 'GF':r'Guatemala', 'GW':r'Iowa(George Webby)', 'HF':r'Hungery', 'IN':r'India', 
-                'MF':r'Madrid', 'MV':r'Madrid', 'PT':r'Patagonia', 'SF':r'St.Louis', 'SH':r'Shanghai', 'TK':r'Turkey', 'TW':r'Twinsburg', 'TX':r'Texas'}
+                'MF':r'Madrid', 'MV':r'Madrid', 'OZ':r'Australia','PT':r'Patagonia', 'SF':r'St.Louis', 'SH':r'Shanghai', 'TK':r'Turkey', 'TW':r'Twinsburg', 'TX':r'Texas'}
     moved_files = []
     unable_to_move =[]
     for root, dirs, files in os.walk(from_folder):
