@@ -74,6 +74,9 @@ def get_csv(event=None):
 
 # Continuous log
 def contin_log(moved_files):
+    os.chdir("..")
+    os.chdir("..")
+    os.chdir("..")
     if os.path.exists('log.csv') == False:
         with open('log.csv', 'a+') as log:
             log.writelines('Date, StudyID, From Here, To Here')
