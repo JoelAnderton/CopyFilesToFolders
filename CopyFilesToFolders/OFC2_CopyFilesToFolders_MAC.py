@@ -74,6 +74,7 @@ def get_csv(event=None):
 
 # Continuous log
 def contin_log(moved_files):
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     os.chdir("..")
     os.chdir("..")
     os.chdir("..")
@@ -500,6 +501,7 @@ def get_submit(event=None):
 
     # Continuous log
     contin_log(moved_files)
+
 
     # Create a log
     if logCheck.get() == True:
