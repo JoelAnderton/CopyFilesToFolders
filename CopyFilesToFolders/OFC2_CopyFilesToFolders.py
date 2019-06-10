@@ -134,7 +134,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     OFC2 Copy Files to Folders
-    version: 3.0
+    version: 3.1
     
     Only works with files with OFC2 style StudyIDs
     The first 7 characters of the file must be the StudyID
@@ -155,7 +155,7 @@ def get_about(event=None):
     - Does not matter if the StudyIDs in a .csv file has StudyIDs as upper 
       or lower case
 
-    6/3/2019 - v. 3.0:
+    6/3/2019 - v. 3.1:
     - Added the option to specify file naming conventions or file 
       extenstions
     - Create a log of all file moves
@@ -547,7 +547,7 @@ def get_submit(event=None):
 if get_platform() == 'Windows':
     # Creates main window
     root = Tk()
-    root.title('OFC2 Copy Files To Folders v. 3.0')
+    root.title('OFC2 Copy Files To Folders v. 3.1')
     root.geometry('450x450+500+200')
 
     # creates variables in window
@@ -673,7 +673,7 @@ if get_platform() == 'Windows':
 else:
     # Creates main window
     root = Tk()
-    root.title('OFC2 Copy Files To Folders v. 3.0')
+    root.title('OFC2 Copy Files To Folders v. 3.1')
     root.geometry('450x450+500+200')
 
     # creates variables in window
