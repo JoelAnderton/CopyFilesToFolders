@@ -179,7 +179,7 @@ def get_submit(event=None):
                     match = re.findall(pattern, file)
                     if match:
                         file = file[0:2].upper() + file[2:]
-                        indiv_folder = match[0]
+                        indiv_folder = match[0].upper()
                         subject_list.append(indiv_folder)
                     else:
                         continue
@@ -192,7 +192,7 @@ def get_submit(event=None):
                         match = re.findall(pattern, file)
                         if match:
                             file = file[0:2].upper() + file[2:]
-                            indiv_folder = match[0]
+                            indiv_folder = match[0].upper()
                             subject_list.append(indiv_folder)
                         else:
                             continue 
@@ -206,7 +206,7 @@ def get_submit(event=None):
                         match = re.findall(pattern, file)
                         if match :
                             file = file[0:2].upper() + file[2:]
-                            indiv_folder = match[0]
+                            indiv_folder = match[0].upper()
                             subject_list.append(indiv_folder)
                         else: 
                             continue
@@ -220,7 +220,7 @@ def get_submit(event=None):
                         match = re.findall(pattern, file)
                         if match:
                            file = file[0:2].upper() + file[2:]
-                           indiv_folder = match[0]
+                           indiv_folder = match[0].upper()
                            subject_list.append(indiv_folder)
                         else: 
                             continue
