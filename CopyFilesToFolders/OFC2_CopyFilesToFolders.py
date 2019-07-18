@@ -528,8 +528,8 @@ def get_submit(event=None):
         if StudyID_list_from_csv != []:
            if 'STUDYID' in StudyID_list_from_csv: 
                 StudyID_list_from_csv.remove('STUDYID')  # remove the word "StudyID" if in the csv
-           StudyID_list_from_csv_set = set(StudyID_list_from_csv) # Convert StudyIDs in StudyID_list_from_csv to a set
-           subject_list_set = {studyID for studyID in subject_list} # Convert StudyIDs in moved_files to a set
+           StudyID_list_from_csv_set = {studyID.upper() for studyID in StudyID_list_from_csv}
+           subject_list_set = {studyID.upper() for studyID in subject_list} # Convert StudyIDs in moved_files to a set
            diff = StudyID_list_from_csv_set.difference(subject_list_set) # Find the StudyIDs in the csv that were not moved
            for id in diff:
                 unable_to_move.append(id)        

@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>8940054e-141e-49ae-8f4c-6f3ba0e97fef</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>OFC2_CopyFilesToFolders_WINDOWS.py</StartupFile>
+    <StartupFile>OFC2_CopyFilesToFolders.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="COHRA2_CopyFilesToFolders_MAC.py" />
     <Compile Include="COHRA2_CopyFilesToFolders_WINDOWS.py" />
+    <Compile Include="OFC2_CopyFilesToFolders.py" />
     <Compile Include="OFC2_CopyFilesToFolders_MAC.py" />
     <Compile Include="OFC2_CopyFilesToFolders_WINDOWS.py" />
   </ItemGroup>
