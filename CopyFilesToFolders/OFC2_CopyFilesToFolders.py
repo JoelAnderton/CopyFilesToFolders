@@ -28,6 +28,10 @@
 #       - Create an option to create an indiviudal log for an individual run of the program
 #   6/10/2019
 #       - Unified the separate python programs for Windows and Mac into 1 cross-platform program
+#   7/18/2019
+#       - Fix issue where if the file is lowercase, but the .csv had the StudyID as uppercase it would 
+#       show on the log as both "Success" and "Failed" - one for the lowercase, one for the uppercase.
+#       - Fix individual folders uppercase
 #########################################################################################
 
 
