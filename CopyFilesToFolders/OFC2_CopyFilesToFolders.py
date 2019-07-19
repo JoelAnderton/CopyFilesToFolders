@@ -546,25 +546,35 @@ def get_submit(event=None):
         messagebox.showinfo('Save Log File', 'Save Log File')
         create_log(moved_files, unable_to_move)
 
+def background_color(event):
+    mode = mode_dd_combo.get()
+    if mode == 'Remove Originals':
+        root.config(background='red2')
+    elif mode == 'Keep Originals' and get_platform == 'MacOS':
+        root.config(background='white')
+    else:
+        root.config(background='SystemButtonFace')
+
 
 # Creates main window
 root = Tk()
 root.title('OFC2 Copy Files To Folders v. 3.1')
-root.geometry('450x450+500+200')
+root.geometry('450x520+500+200')
+
+# creates variables in window
+mode = StringVar()
+from_folder = StringVar()
+to_folder = StringVar()
+csv_path = StringVar()
+specifyBox = StringVar()
+libCheck = BooleanVar()
+siteCheck = BooleanVar()
+indivCheck = BooleanVar()
+imagesCheck = BooleanVar()
+logCheck = BooleanVar()
 
 # WINDOWS
 if get_platform() == 'Windows':
-
-    # creates variables in window
-    from_folder = StringVar()
-    to_folder = StringVar()
-    csv_path  = StringVar()
-    specifyBox = StringVar()
-    libCheck = BooleanVar()
-    siteCheck = BooleanVar()
-    indivCheck = BooleanVar()
-    imagesCheck = BooleanVar()
-    logCheck = BooleanVar()
 
     # Title
     frame = Frame(root)
@@ -677,21 +687,20 @@ if get_platform() == 'Windows':
 # All other OS (i.e. Mac/Linux)
 else:
 
-    # creates variables in window
-    from_folder = StringVar()
-    to_folder = StringVar()
-    csv_path = StringVar()
-    specifyBox = StringVar()
-    libCheck = BooleanVar()
-    siteCheck = BooleanVar()
-    indivCheck = BooleanVar()
-    imagesCheck = BooleanVar()
-    logCheck = BooleanVar()
-
     # Title
     frame = Frame(root)
     title = Label(frame, text='OFC2 Copy files from one location to another:')
     title.pack()
+    frame.pack()
+
+    # Mode: Keep Originals vs. Remove Originals
+    frame = Frame(root)
+    mode_dd_label = Label(frame, text='Mode: ')
+    mode_dd_label.pack(side=LEFT)
+    mode_dd_combo = ttk.Combobox(frame, textvariable=mode, values=('Keep Originals', 'Remove Originals'), width=15)
+    mode_dd_combo.bind("<<ComboboxSelected>>", background_color)
+    mode_dd_combo.set('Keep Originals')
+    mode_dd_combo.pack()
     frame.pack()
 
     # From Here text box
