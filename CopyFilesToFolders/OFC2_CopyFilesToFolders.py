@@ -575,6 +575,7 @@ def background_color(event):
         frame14.config(background='firebrick1')
         frame15.config(background='firebrick1') 
         frame16.config(background='firebrick1')
+        frame17.config(background='firebrick1')
         specifyBoxTitle.config(background='firebrick1')
         specifyBoxLabel.config(background='firebrick1')
 
@@ -605,6 +606,7 @@ def background_color(event):
         frame14.config(background='white')
         frame15.config(background='white') 
         frame16.config(background='white')
+        frame17.config(background='white')
         specifyBoxTitle.config(background='white')
         specifyBoxLabel.config(background='white')
 
@@ -635,8 +637,10 @@ def background_color(event):
         frame14.config(background='SystemButtonFace')
         frame15.config(background='SystemButtonFace') 
         frame16.config(background='SystemButtonFace')
+        frame17.config(background='SystemButtonFace')
         specifyBoxTitle.config(background='SystemButtonFace')
         specifyBoxLabel.config(background='SystemButtonFace')
+
 
 # Creates main window
 root = Tk()
@@ -707,78 +711,78 @@ if get_platform() == 'Windows':
     frame6.pack()
 
     # Make Library folders checkbox
-    frame = Frame(root)
-    libCheckBut = ttk.Checkbutton(frame, text='Make Library subfolders      ', variable=libCheck)
-    libCheckBut.pack()
-    frame.pack()
-
-    # Make Individual folder
     frame7 = Frame(root)
-    indivCheckBut = ttk.Checkbutton(frame7, text='Make Individual subfolders ', variable=indivCheck)
-    indivCheckBut.pack()
+    libCheckBut = ttk.Checkbutton(frame7, text='Make Library subfolders      ', variable=libCheck)
+    libCheckBut.pack()
     frame7.pack()
 
-    # Make Images folder
+    # Make Individual folder
     frame8 = Frame(root)
-    imagesCheckBut = ttk.Checkbutton(frame8, text='Make Images subfolders     ', variable=imagesCheck)
-    imagesCheckBut.pack()
+    indivCheckBut = ttk.Checkbutton(frame8, text='Make Individual subfolders ', variable=indivCheck)
+    indivCheckBut.pack()
     frame8.pack()
 
+    # Make Images folder
     frame9 = Frame(root)
-    lines2 = Label(frame9, text='')
-    lines2.pack()
+    imagesCheckBut = ttk.Checkbutton(frame9, text='Make Images subfolders     ', variable=imagesCheck)
+    imagesCheckBut.pack()
     frame9.pack()
 
-    # .CSV file
     frame10 = Frame(root)
-    limitTitle = ttk.Label(frame10, text='Use a .csv file to limit StudyIDs: ')
-    limitTitle.pack()
-    limitLabel = ttk.Label(frame10, text='.CSV path:')
-    limitLabel.pack(side=LEFT)
-    limitEntry = ttk.Entry(frame10, textvariable=csv_path)
-    limitEntry.pack(side=LEFT)
-    getDataButton3 = ttk.Button(frame10, text='Browse...', command=get_csv, width=10)
-    getDataButton3.pack(side=LEFT)
+    lines2 = Label(frame9, text='')
+    lines2.pack()
     frame10.pack()
 
+    # .CSV file
     frame11 = Frame(root)
-    lines3 = Label(frame11, text='')
-    lines3.pack()
+    limitTitle = ttk.Label(frame11, text='Use a .csv file to limit StudyIDs: ')
+    limitTitle.pack()
+    limitLabel = ttk.Label(frame11, text='.CSV path:')
+    limitLabel.pack(side=LEFT)
+    limitEntry = ttk.Entry(frame11, textvariable=csv_path)
+    limitEntry.pack(side=LEFT)
+    getDataButton3 = ttk.Button(frame11, text='Browse...', command=get_csv, width=10)
+    getDataButton3.pack(side=LEFT)
     frame11.pack()
 
-    # Specify Filename convention box
     frame12 = Frame(root)
-    specifyBoxTitle = ttk.Label(frame12, text='Specify any specific file naming conventions or file extensions: ')
-    specifyBoxTitle.pack()
-    specifyBoxLabel = ttk.Label(frame12, text='Example: _Clean, .txt, .obj etc...')
-    specifyBoxLabel.pack()
-    specifyBoxEntry = ttk.Entry(frame12, textvariable=specifyBox)
-    specifyBoxEntry.pack()
+    lines3 = Label(frame12, text='')
+    lines3.pack()
     frame12.pack()
 
-    # Make Log checkbox
+    # Specify Filename convention box
     frame13 = Frame(root)
-    logCheckBut = ttk.Checkbutton(frame13, text='Create a log file', variable=logCheck)
-    logCheckBut.pack()
+    specifyBoxTitle = ttk.Label(frame13, text='Specify any specific file naming conventions or file extensions: ')
+    specifyBoxTitle.pack()
+    specifyBoxLabel = ttk.Label(frame13, text='Example: _Clean, .txt, .obj etc...')
+    specifyBoxLabel.pack()
+    specifyBoxEntry = ttk.Entry(frame13, textvariable=specifyBox)
+    specifyBoxEntry.pack()
     frame13.pack()
 
-    # Submit button
+    # Make Log checkbox
     frame14 = Frame(root)
-    submitButton = ttk.Button(frame14, text='Submit', command=get_submit, width=10)
-    submitButton.pack()
+    logCheckBut = ttk.Checkbutton(frame14, text='Create a log file', variable=logCheck)
+    logCheckBut.pack()
     frame14.pack()
 
-    # Close button
+    # Submit button
     frame15 = Frame(root)
-    closeButton = ttk.Button(frame15, text='Close', command=root.destroy, width=10)
-    closeButton.pack()
+    submitButton = ttk.Button(frame15, text='Submit', command=get_submit, width=10)
+    submitButton.pack()
     frame15.pack()
 
-    #About button
+    # Close button
     frame16 = Frame(root)
-    closeButton = ttk.Button(frame16, text='About', command=get_about, width=10)
+    closeButton = ttk.Button(frame16, text='Close', command=root.destroy, width=10)
     closeButton.pack()
     frame16.pack()
+
+    #About button
+    frame17 = Frame(root)
+    closeButton = ttk.Button(frame17, text='About', command=get_about, width=10)
+    closeButton.pack()
+    frame17.pack()
 
     root.mainloop()
 
@@ -786,120 +790,125 @@ if get_platform() == 'Windows':
 else:
 
     # Title
-    frame = Frame(root)
-    title = Label(frame, text='OFC2 Copy files from one location to another:')
+    frame1 = Frame(root)
+    title = Label(frame1, text='OFC2 Copy files from one location to another:')
     title.pack()
-    frame.pack()
+    frame1.pack()
 
     # Mode: Keep Originals vs. Remove Originals
-    frame = Frame(root)
-    mode_dd_label = Label(frame, text='Mode: ')
+    frame2 = Frame(root)
+    mode_dd_label = Label(frame2, text='Mode: ')
     mode_dd_label.pack(side=LEFT)
-    mode_dd_combo = ttk.Combobox(frame, textvariable=mode, values=('Keep Originals', 'Remove Originals'), width=17)
+    mode_dd_combo = ttk.Combobox(frame2, textvariable=mode, values=('Keep Originals', 'Remove Originals'), width=17)
     mode_dd_combo.bind("<<ComboboxSelected>>", background_color)
     mode_dd_combo.set('Keep Originals')
     mode_dd_combo.pack()
-    frame.pack()
+    frame2.pack()
+
+    frame3 = Frame(root)
+    lines1 = Label(frame3, text='')
+    lines1.pack()
+    frame3.pack()
 
     # From Here text box
-    frame = Frame(root)
-    fromLabel = Label(frame, text='From here:')
+    frame4 = Frame(root)
+    fromLabel = Label(frame4, text='From here:')
     fromLabel.pack(side=LEFT)
-    fromEntry = Entry(frame, textvariable=from_folder)
+    fromEntry = Entry(frame4, textvariable=from_folder)
     fromEntry.pack(side=LEFT)
-    getDataButton1 = Button(frame, text='Browse...', command=get_fromData, width=10)
+    getDataButton1 = Button(frame4, text='Browse...', command=get_fromData, width=10)
     getDataButton1.pack(side=LEFT)
-    frame.pack()
+    frame4.pack()
 
     # To here text box
-    frame = Frame(root)
-    toLabel = Label(frame, text='To here:    ')
+    frame5 = Frame(root)
+    toLabel = Label(frame5, text='To here:    ')
     toLabel.pack(side=LEFT)
-    toEntry = Entry(frame, textvariable=to_folder)
+    toEntry = Entry(frame5, textvariable=to_folder)
     toEntry.pack(side=LEFT)
-    getDataButton2 = Button(frame, text='Browse...', command=get_toData, width=10)
+    getDataButton2 = Button(frame5, text='Browse...', command=get_toData, width=10)
     getDataButton2.pack(side=LEFT)
-    frame.pack()
+    frame5.pack()
 
     # Make site folders checkbox
-    frame = Frame(root)
-    siteCheckBut = Checkbutton(frame, text='Make Site subfolders           ', variable=siteCheck)
+    frame6 = Frame(root)
+    siteCheckBut = Checkbutton(frame6, text='Make Site subfolders           ', variable=siteCheck)
     siteCheckBut.pack()
-    frame.pack()
+    frame6.pack()
 
     # Make Library folders checkbox
-    frame = Frame(root)
-    libCheckBut = Checkbutton(frame, text='Make Library subfolders      ', variable=libCheck)
+    frame7 = Frame(root)
+    libCheckBut = Checkbutton(frame7, text='Make Library subfolders      ', variable=libCheck)
     libCheckBut.pack()
-    frame.pack()
+    frame7.pack()
 
     # Make Individual folder
-    frame = Frame(root)
-    indivCheckBut = Checkbutton(frame, text='Make Individual subfolders ', variable=indivCheck)
+    frame8 = Frame(root)
+    indivCheckBut = Checkbutton(frame8, text='Make Individual subfolders ', variable=indivCheck)
     indivCheckBut.pack()
-    frame.pack()
+    frame8.pack()
 
     # Make Images folder
-    frame = Frame(root)
-    imagesCheckBut = Checkbutton(frame, text='Make Images subfolders     ', variable=imagesCheck)
+    frame9 = Frame(root)
+    imagesCheckBut = Checkbutton(frame9, text='Make Images subfolders     ', variable=imagesCheck)
     imagesCheckBut.pack()
-    frame.pack()
+    frame9.pack()
 
-    frame = Frame(root)
-    lines = Label(frame, text='')
-    lines.pack()
-    frame.pack()
+    frame10 = Frame(root)
+    lines2 = Label(frame10, text='')
+    lines2.pack()
+    frame10.pack()
 
     # .CSV file
-    frame = Frame(root)
-    limitTitle = Label(frame, text='Use a .csv file to limit StudyIDs: ')
+    frame11 = Frame(root)
+    limitTitle = Label(frame11, text='Use a .csv file to limit StudyIDs: ')
     limitTitle.pack()
-    limitLabel = Label(frame, text='.CSV path:')
+    limitLabel = Label(frame11, text='.CSV path:')
     limitLabel.pack(side=LEFT)
-    limitEntry = Entry(frame, textvariable=csv_path)
+    limitEntry = Entry(frame11, textvariable=csv_path)
     limitEntry.pack(side=LEFT)
-    getDataButton3 = Button(frame, text='Browse...', command=get_csv, width=10)
+    getDataButton3 = Button(frame11, text='Browse...', command=get_csv, width=10)
     getDataButton3.pack(side=LEFT)
-    frame.pack()
+    frame11.pack()
 
-    frame = Frame(root)
-    lines = Label(frame, text='')
-    lines.pack()
-    frame.pack()
+    frame12 = Frame(root)
+    lines3 = Label(frame12, text='')
+    lines3.pack()
+    frame12.pack()
 
     # Specify Filename convention box
-    frame = Frame(root)
-    specifyBoxTitle = Label(frame, text='Specify any specific file naming conventions or file extensions: ')
+    frame13 = Frame(root)
+    specifyBoxTitle = Label(frame13, text='Specify any specific file naming conventions or file extensions: ')
     specifyBoxTitle.pack()
-    specifyBoxLabel = Label(frame, text='Example: _Clean, .txt, .obj etc...')
+    specifyBoxLabel = Label(frame13, text='Example: _Clean, .txt, .obj etc...')
     specifyBoxLabel.pack()
-    specifyBoxEntry = Entry(frame, textvariable=specifyBox)
+    specifyBoxEntry = Entry(frame13, textvariable=specifyBox)
     specifyBoxEntry.pack()
-    frame.pack()
+    frame13.pack()
 
     # Make Log checkbox
-    frame = Frame(root)
-    logCheckBut = Checkbutton(frame, text='Create a log file', variable=logCheck)
+    frame14 = Frame(root)
+    logCheckBut = Checkbutton(frame14, text='Create a log file', variable=logCheck)
     logCheckBut.pack()
-    frame.pack()
+    frame14.pack()
 
     # Submit button
-    frame = Frame()
-    submitButton = Button(frame, text='Submit', command=get_submit, width=10)
+    frame15 = Frame()
+    submitButton = Button(frame15, text='Submit', command=get_submit, width=10)
     submitButton.pack()
-    frame.pack()
+    frame15.pack()
 
     # Close button
-    frame = Frame()
-    closeButton = Button(frame, text='Close', command=root.destroy, width=10)
+    frame16 = Frame()
+    closeButton = Button(frame16, text='Close', command=root.destroy, width=10)
     closeButton.pack()
-    frame.pack()
+    frame16.pack()
 
     # About button
-    frame = Frame()
-    closeButton = Button(frame, text='About', command=get_about, width=10)
+    frame17 = Frame()
+    closeButton = Button(frame17, text='About', command=get_about, width=10)
     closeButton.pack()
-    frame.pack()
+    frame17.pack()
 
     root.mainloop()
 
