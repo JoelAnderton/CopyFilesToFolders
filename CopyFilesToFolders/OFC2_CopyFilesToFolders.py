@@ -832,13 +832,13 @@ else:
 
     # Make site folders checkbox
     frame6 = Frame(root)
-    siteCheckBut = Checkbutton(frame6, text='Make Site subfolders           ', variable=siteCheck)
+    siteCheckBut = Checkbutton(frame6, text='Make Site subfolders          ', variable=siteCheck)
     siteCheckBut.pack()
     frame6.pack()
 
     # Make Library folders checkbox
     frame7 = Frame(root)
-    libCheckBut = Checkbutton(frame7, text='Make Library subfolders      ', variable=libCheck)
+    libCheckBut = Checkbutton(frame7, text='Make Library subfolders     ', variable=libCheck)
     libCheckBut.pack()
     frame7.pack()
 
