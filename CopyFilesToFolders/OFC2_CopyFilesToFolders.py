@@ -550,7 +550,7 @@ def background_color(event):
     mode = mode_dd_combo.get()
     if mode == 'Remove Originals':
         root.config(background='red2')
-    elif mode == 'Keep Originals' and get_platform == 'MacOS':
+    elif mode == 'Keep Originals' and get_platform() == 'MacOS':
         root.config(background='white')
     else:
         root.config(background='SystemButtonFace')
