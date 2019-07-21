@@ -11,7 +11,6 @@
 #    12/17/2018:
 #       - Made it into a GUI! (previous "MoveFiles" program was a console app)
 #       - Allowed for various OFC2 style subfolders to be made#
-#
 #    12/19/2018
 #       - Added the option use a .csv file to limit StudyIDs to copy 
 #    12/20/2018
@@ -414,7 +413,6 @@ def get_submit(event=None):
                             shutil.copy2(os.path.join(root, file),os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ', ' + indiv_folder + ', ' + os.path.join(root, file) + ', ' + os.path.join(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
 
-
                     else:
                         print('Error 5 -  Check where site=True, library=False, and individual=False')
                         continue 
@@ -444,12 +442,8 @@ def get_submit(event=None):
                             shutil.move(os.path.join(root, file), os.path.join(to_folder, indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ', ' + indiv_folder + ', ' + os.path.join(root, file) + ', ' + os.path.join(to_folder, indiv_folder, r'Images', file))
                         else:
-                            shutil.copy2(os.path.join(root, file),
-                                         os.path.join(to_folder, indiv_folder, r'Images', file))
-                            moved_files.append('Success Copy!, ' + str(
-                                datetime.datetime.now()) + ', ' + indiv_folder + ', ' + os.path.join(root,
-                                                                                                     file) + ', ' + os.path.join(
-                                to_folder, indiv_folder, r'Images', file))
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, indiv_folder, r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ', ' + indiv_folder + ', ' + os.path.join(root, file) + ', ' + os.path.join(to_folder, indiv_folder, r'Images', file))
 
                     else:
                         print('Error 6 -  Check where site=False, library=False, and individual=True')
