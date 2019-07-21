@@ -138,7 +138,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     OFC2 Copy Files to Folders
-    version: 3.1
+    version: 4.0
     
     Only works with files with OFC2 style StudyIDs
     The first 7 characters of the file must be the StudyID
