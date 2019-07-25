@@ -140,7 +140,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     OFC2 Copy Files to Folders
-    version: 4.0
+    version: 4.1
     
     Only works with files with OFC2 style StudyIDs
     The first 7 characters of the file must be the StudyID
@@ -166,9 +166,10 @@ def get_about(event=None):
       extensions
     - Create a log of all file moves
     
-    7/20/2019 v. 4.0
+    7/20/2019 v. 4.1
     - Added "Mode" option to change between "Keep Originals" and 
       "Remove Originals"
+    - Minor bug fixes
     ''')
 
 
@@ -846,7 +847,7 @@ def background_color(event):
 
 # Creates main window
 root = Tk()
-root.title('OFC2 Copy Files To Folders v. 4.0')
+root.title('OFC2 Copy Files To Folders v. 4.1')
 root.geometry('450x500+500+200')
 
 # creates variables in window
