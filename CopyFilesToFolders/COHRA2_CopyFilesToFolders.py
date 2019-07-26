@@ -551,7 +551,7 @@ def background_color(event):
 # Creates main window
 root = Tk()
 root.title('COHRA2 Copy Files To Folders v. 4.1')
-root.geometry('450x450+500+200')
+
 
 # creates variables in window
 mode = StringVar()
@@ -567,7 +567,7 @@ logCheck = BooleanVar()
 
 # WINDOWS
 if get_platform() == 'Windows':
-
+    root.geometry('450x450+500+200')
     # Title
     frame1 = Frame(root)
     title = ttk.Label(frame1, text='COHRA2 Copy files from one location to another:')
@@ -686,6 +686,7 @@ if get_platform() == 'Windows':
     root.mainloop()
 
 else:
+    root.geometry('450x500+500+200')
     # Title
     frame1 = Frame(root)
     title = Label(frame1, text='COHRA2 Copy files from one location to another:')
@@ -696,7 +697,7 @@ else:
     frame2 = Frame(root)
     mode_dd_label = Label(frame2, text='Mode: ')
     mode_dd_label.pack(side=LEFT)
-    mode_dd_combo = Combobox(frame2, textvariable=mode, values=('Keep Originals', 'Remove Originals'), width=17)
+    mode_dd_combo = ttk.Combobox(frame2, textvariable=mode, values=('Keep Originals', 'Remove Originals'), width=17)
     mode_dd_combo.bind("<<ComboboxSelected>>", background_color)
     mode_dd_combo.set('Keep Originals')
     mode_dd_combo.pack()
@@ -735,7 +736,7 @@ else:
 
     # Make Visit folders
     frame7 = Frame(root)
-    visitCheckBut = Checkbutton(frame7, text='Make Visit folders            ', variable=visitCheck)
+    visitCheckBut = Checkbutton(frame7, text='Make Visit folders           ', variable=visitCheck)
     visitCheckBut.pack()
     frame7.pack()
 
