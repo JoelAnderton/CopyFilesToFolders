@@ -25,10 +25,13 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter.filedialog import askdirectory
 from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import asksaveasfile
 import os
 import shutil
 import csv
 import re
+import datetime
+import sys
 
 
 # Determines OS
@@ -136,7 +139,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     COHRA2 Copy Files to Folders
-    version: 2.3
+    version: 4.1
     
     Only works with files with COHRA2 
     style SubjectIDs.The first 8 
@@ -157,47 +160,114 @@ def get_about(event=None):
     4/9/2019 - v. 2.3
     - Added option to create an "Images" 
        subfolder
-    
+
+    7/26/2019 - v. 4.1
+    - Added "Mode" option to change between 
+      "Keep Originals" and "Remove Originals"
+    - Added logging feature
+    - Minor bug fixes
+    - Updated version to be in sync with OFC2
     ''')
 
 
 def get_submit(event=None):
+
+    moved_files = []
     unable_to_move =[]
-    for root, dirs, files in os.walk(from_folder):
-        os.chdir(to_folder)
+    subject_list = []
+
+    for root, dirs, files in os.walk(from_folder):  
         for file in files:
             try:
-                if limitEntry.get() == '':
-                    pass
-
-                else:
-                    if file[0:8] in StudyID_list_from_csv:
-                        pass
+                # limit and specifyBox are both null
+                if limitEntry.get() == '' and specifyBox.get() == '': # is the limiting .csv file being used
+                    # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing 
+                    pattern = r'[0-9]{8}'
+                    match = re.findall(pattern, file)
+                    if match:
+                        indiv_folder = match[0]
+                        subject_list.append(indiv_folder)
+                    else:
+                        continue
+                 
+                # limit is not null and and specifyBox is null
+                elif limitEntry.get() != '' and specifyBox.get() == '':
+                    if (file[0:8] in StudyID_list_from_csv):
+                        # Determines if the file contains a StudyID: If so, it uppercases the first 2 letters. If not, it changes nothing 
+                        pattern = r'[0-9]{8}'
+                        match = re.findall(pattern, file)
+                        if match:
+                            indiv_folder = match[0]
+                            subject_list.append(indiv_folder)
+                        else:
+                            continue 
                     else:
                         continue
 
+                # limit is null and specifyBox is not null
+                elif limitEntry.get() == '' and specifyBox.get() != '':
+                    if specifyBox.get().upper() in file.upper():
+                        pattern = r'[0-9]{8}'
+                        match = re.findall(pattern, file)
+                        if match :
+                            indiv_folder = match[0]
+                            subject_list.append(indiv_folder)
+                        else: 
+                            continue
+                    else:
+                        continue
+
+                # both limit and specifyBox are not null
+                elif limitEntry.get() != '' and specifyBox.get() != '':
+                    if (file[0:8] in StudyID_list_from_csv and specifyBox.get().upper() in file.upper()):
+                        pattern = r'[0-9]{8}'
+                        match = re.findall(pattern, file)
+                        if match:
+                           indiv_folder = match[0]
+                           subject_list.append(indiv_folder)
+                        else: 
+                            continue
+                    else:
+                        continue
                 print('Creating: {}'.format(file))
 
                 # individual and visit and Images
                 if indivCheck.get() and visitCheck.get() and imagesCheck.get():
                     if os.path.exists(os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images')):
-                        shutil.copy2(os.path.join(root, file),
-                                     os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, file[0:8])) is False:
-                        os.chdir(os.path.join(to_folder))
                         os.makedirs(os.path.join(to_folder, file[0:8], get_visitFolder(file),  r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, file[0:8], get_visitFolder(file))) is False:
-                        os.chdir(os.path.join(to_folder, file[0:8]))
                         os.makedirs(os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images')) is False:
-                        os.chdir(os.path.join(to_folder, file[0:8]))
                         os.makedirs(os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), r'Images', file))
+
                     else:
                         print('Check where individual=True and visit=True and Images=True')
                         continue
@@ -205,12 +275,22 @@ def get_submit(event=None):
                 # individual folders and Images
                 elif indivCheck.get() is True and visitCheck.get() is False and imagesCheck.get() is True:
                     if os.path.exists(os.path.join(to_folder, file[0:8], r'Images')):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, file[0:8])) is False:
-                        os.chdir(os.path.join(to_folder))
                         os.makedirs(os.path.join(to_folder, file[0:8], r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], r'Images', file))
+
                     else:
                         print('Check where individual=True and Images=True')
                         continue
@@ -218,12 +298,21 @@ def get_submit(event=None):
                 # visit folders and Images
                 elif indivCheck.get() is False and visitCheck.get() is True and imagesCheck.get() is True:
                     if os.path.exists(os.path.join(to_folder, get_visitFolder(file), r'Images')):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, get_visitFolder(file), r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, get_visitFolder(file), r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, get_visitFolder(file), r'Images')) is False:
-                        os.chdir(os.path.join(to_folder))
                         os.makedirs(os.path.join(to_folder, get_visitFolder(file), r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, get_visitFolder(file), r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, get_visitFolder(file), r'Images', file))
 
                     else:
                         print('Check where visit=True and Images=True')
@@ -232,12 +321,21 @@ def get_submit(event=None):
                 # Images folders only
                 elif indivCheck.get() is False and visitCheck.get() is False and imagesCheck.get() is True:
                     if os.path.exists(os.path.join(to_folder, r'Images')):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, r'Images', file))
 
                     elif os.path.exists(os.path.join(to_folder, r'Images')) is False:
-                        os.chdir(os.path.join(to_folder))
                         os.makedirs(os.path.join(to_folder, r'Images'))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, r'Images', file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, r'Images', file))
 
                     else:
                         print('Check where Images=True')
@@ -246,25 +344,34 @@ def get_submit(event=None):
                 # individual and visit folders
                 elif indivCheck.get() and visitCheck.get() and imagesCheck.get() is False:
                     if os.path.exists(os.path.join(to_folder, file[0:8], get_visitFolder(file))):
-                        shutil.copy2(os.path.join(root, file),
-                                     os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
 
                     elif os.path.exists(os.path.join(to_folder, file[0:8])) is False:
-                        os.chdir(os.path.join(to_folder))
                         os.mkdir(os.path.join(to_folder, file[0:8]))
                         if os.path.exists(os.path.join(to_folder, file[0:8], get_visitFolder(file))) is False:
-                            os.chdir(os.path.join(to_folder, file[0:8]))
                             os.makedirs(os.path.join(to_folder, file[0:8], get_visitFolder(file)))
-                            shutil.copy2(os.path.join(root, file),
-                                         os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                            if mode_dd_combo.get() == 'Remove Originals':
+                                shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                                moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                            else:
+                                shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                                moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
 
                     elif os.path.exists(os.path.join(to_folder, file[0:8])) is True:
                         if os.path.exists(os.path.join(to_folder, file[0:8], get_visitFolder(file))) is False:
-                            os.chdir(os.path.join(to_folder, file[0:8]))
                             os.makedirs(os.path.join(to_folder, file[0:8], get_visitFolder(file)))
-                            shutil.copy2(os.path.join(root, file),
-                                         os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
-
+                            if mode_dd_combo.get() == 'Remove Originals':
+                                shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                                moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                            else:
+                                shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                                moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
+                    
                     else:
                         print('Check where individual=True and visit=True and Images=false')
                         continue
@@ -272,12 +379,22 @@ def get_submit(event=None):
                 # individual folders only
                 elif indivCheck.get() is True and visitCheck.get() is False and imagesCheck.get() is False:
                     if os.path.exists(os.path.join(to_folder, file[0:8])):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' + os.path.join(to_folder, file[0:8], file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' + os.path.join(to_folder, file[0:8], file))
 
                     elif os.path.exists(os.path.join(to_folder, file[0:8])) is False:
-                        os.chdir(os.path.join(to_folder))
                         os.makedirs(os.path.join(to_folder, file[0:8]))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, file[0:8], file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], file))
+
                     else:
                         print('Check where individual=True')
                         continue
@@ -285,34 +402,57 @@ def get_submit(event=None):
                 # visit folders only
                 elif indivCheck.get() is False and visitCheck.get() is True and imagesCheck.get() is False:
                     if os.path.exists(os.path.join(to_folder, get_visitFolder(file))):
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], file))
 
                     elif os.path.exists(os.path.join(to_folder, get_visitFolder(file))) is False:
-                        os.chdir(os.path.join(to_folder))
                         os.makedirs(os.path.join(to_folder, get_visitFolder(file)))
-                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), file))
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], file))
+                        else:
+                            shutil.copy2(os.path.join(root, file), os.path.join(to_folder, get_visitFolder(file), file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' +  os.path.join(to_folder, file[0:8], file))
 
                     else:
                         print('Check where visit=True')
                         continue
 
                 else:
-                    shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file))
-                    # print(os.path.join(root, file), os.path.join(to_folder, file))
-
+                    if mode_dd_combo.get() == 'Remove Originals':
+                        shutil.move(os.path.join(root, file), os.path.join(to_folder, file))
+                        moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' + os.path.join(to_folder, file))
+                    else:
+                        shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file))
+                        moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + os.path.join(root, file) + ',' + os.path.join(to_folder, file))
             except:
                 unable_to_move.append(file)
     
-    print()
-    if unable_to_move != []:
-        print('*******************************************')
-        print('Unable to determine where to move file(s):')
-        for file in unable_to_move:
-            print(file)
-            messagebox.showwarning('Unable to move file', 'Unable to move file: \n' + file)
     
-    print('Done!')
-    messagebox.showinfo('Completed', 'Completed')
+    # Find if there are StudyIDs on the .csv that were not found 
+    if limitEntry.get() != '': 
+        if StudyID_list_from_csv != []:
+           if 'StudyID' in StudyID_list_from_csv: 
+                StudyID_list_from_csv.remove('StudyID')  # remove the word "StudyID" if in the csv
+           if 'SubjectID' in StudyID_list_from_csv: 
+                StudyID_list_from_csv.remove('SubjectID')  # remove the word "SubjectID" if in the csv 
+           StudyID_list_from_csv_set = {studyID.upper() for studyID in StudyID_list_from_csv}
+           subject_list_set = {studyID.upper() for studyID in subject_list} # Convert StudyIDs in moved_files to a set
+           diff = StudyID_list_from_csv_set.difference(subject_list_set) # Find the StudyIDs in the csv that were not moved
+           for id in diff:
+                unable_to_move.append(id)        
+
+    # Continuous log
+    contin_log(moved_files, unable_to_move)
+
+    # Create a log
+    if logCheck.get() == True:
+        messagebox.showinfo('Save Log File', 'Save Log File')
+        create_log(moved_files, unable_to_move)
 
 
 def background_color(event):
