@@ -605,15 +605,6 @@ def get_submit(event=None):
                             shutil.copy2(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file)))
                     
-                    elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists() == True and Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder).exists() == False) :
-                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder)).mkdir(parents=True, exist_ok=True)
-                        if mode_dd_combo.get() == 'Remove Originals':
-                            shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
-                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file)))
-                        else:
-                            shutil.copy2(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
-                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file)))
-
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder).exists() == False):
                         Path(PurePath(to_folder,  site_dic.get(file[0:2].upper()), indiv_folder)).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
