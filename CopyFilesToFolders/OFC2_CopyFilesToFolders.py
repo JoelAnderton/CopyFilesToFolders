@@ -253,7 +253,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists() == False:
-                        os.makedirs(PurePath(to_folder,site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images'))
+                        Path(PurePath(to_folder,site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
@@ -262,7 +262,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library')).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images'))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
@@ -271,7 +271,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder)).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images'))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
@@ -280,7 +280,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images')).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images'))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, r'Images', file))
@@ -304,7 +304,7 @@ def get_submit(event=None):
 
                     elif Path(PurePath(to_folder, r'Library')).exists() == False:
                           #  os.chdir(PurePath(to_folder))
-                        os.makedirs(PurePath(to_folder, r'Library', indiv_folder, r'Images'))
+                        Path(PurePath(to_folder, r'Library', indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Library', indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', indiv_folder, r'Images', file))
@@ -314,7 +314,7 @@ def get_submit(event=None):
 
                     elif Path(PurePath(to_folder, r'Library', indiv_folder).exists() == False):
                           #  os.chdir(PurePath(to_folder,  r'Library'))
-                        os.makedirs(PurePath(to_folder,  r'Library', indiv_folder, r'Images'))
+                        Path(PurePath(to_folder,  r'Library', indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder,  r'Library', indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', indiv_folder, r'Images', file))
@@ -337,7 +337,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images'))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
@@ -346,7 +346,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder).exists() == False):
-                        os.makedirs(PurePath(to_folder,  site_dic.get(file[0:2].upper()), indiv_folder, r'Images'))
+                        Path(PurePath(to_folder,  site_dic.get(file[0:2].upper()), indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
@@ -369,7 +369,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images'))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
@@ -378,7 +378,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library').exists() == False):
-                        os.makedirs(PurePath(to_folder,  site_dic.get(file[0:2].upper()), r'Library', r'Images'))
+                        Path(PurePath(to_folder,  site_dic.get(file[0:2].upper()), r'Library', r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder,  site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
@@ -401,7 +401,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images'))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
@@ -410,7 +410,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images')).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images'))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
@@ -433,7 +433,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, indiv_folder, r'Images', file))
 
                     elif Path(PurePath(to_folder, indiv_folder)).exists() == False:
-                        os.makedirs(PurePath(to_folder, indiv_folder, r'Images'))
+                        Path(PurePath(to_folder, indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, indiv_folder, r'Images', file))
@@ -442,7 +442,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, indiv_folder, r'Images', file))
 
                     elif Path(PurePath(to_folder, indiv_folder, r'Images')).exists() == False:
-                        os.makedirs(PurePath(to_folder, indiv_folder, r'Images'))
+                        Path(PurePath(to_folder, indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, indiv_folder, r'Images', file))
@@ -465,7 +465,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', r'Images', file))
 
                     elif Path(PurePath(to_folder, r'Library')).exists() == False:
-                        os.makedirs(PurePath(to_folder, r'Library', r'Images'))
+                        Path(PurePath(to_folder, r'Library', r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Library', r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', r'Images', file))
@@ -474,7 +474,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', r'Images', file))
 
                     elif Path(PurePath(to_folder, r'Library', r'Images')).exists() == False:
-                        os.makedirs(PurePath(to_folder, r'Library', r'Images'))
+                        Path(PurePath(to_folder, r'Library', r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Library', r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', r'Images', file))
@@ -497,7 +497,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Images', file))
 
                     elif Path(PurePath(to_folder, r'Images')).exists() == False:
-                        os.makedirs(PurePath(to_folder, r'Images'))
+                        Path(PurePath(to_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Images', file))
@@ -520,7 +520,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder)).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
@@ -529,7 +529,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library')).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder)).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder +',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
@@ -538,7 +538,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root,file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder).exists() == False):
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder)).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
@@ -561,7 +561,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', indiv_folder, file))
 
                     elif Path(PurePath(to_folder, r'Library')).exists() == False:
-                        os.makedirs(PurePath(to_folder, r'Library', indiv_folder))
+                        Path(PurePath(to_folder, r'Library', indiv_folder)).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Library', indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', indiv_folder, file))
@@ -570,7 +570,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', indiv_folder, file))
 
                     elif Path(PurePath(to_folder, r'Library', indiv_folder).exists() == False):
-                        os.makedirs(PurePath(to_folder,  r'Library', indiv_folder))
+                        Path(PurePath(to_folder,  r'Library', indiv_folder)).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder,  r'Library', indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', indiv_folder, file))
@@ -593,7 +593,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder)).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
@@ -602,7 +602,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder).exists() == False):
-                        os.makedirs(PurePath(to_folder,  site_dic.get(file[0:2].upper()), indiv_folder))
+                        Path(PurePath(to_folder,  site_dic.get(file[0:2].upper()), indiv_folder)).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
@@ -625,7 +625,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library'))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
@@ -634,7 +634,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library').exists() == False):
-                        os.makedirs(PurePath(to_folder,  site_dic.get(file[0:2].upper()), r'Library'))
+                        Path(PurePath(to_folder,  site_dic.get(file[0:2].upper()), r'Library')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder,  site_dic.get(file[0:2].upper()), r'Library', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
@@ -657,7 +657,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), file))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists() == False:
-                        os.makedirs(PurePath(to_folder, site_dic.get(file[0:2].upper())))
+                        Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), file))
@@ -680,7 +680,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, indiv_folder, file))
 
                     elif Path(PurePath(to_folder, indiv_folder)).exists() == False:
-                        os.makedirs(PurePath(to_folder, indiv_folder))
+                        Path(PurePath(to_folder, indiv_folder)).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, indiv_folder, file))
@@ -703,7 +703,7 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', file))
 
                     elif Path(PurePath(to_folder, r'Library')).exists() == False:
-                        os.makedirs(PurePath(to_folder, r'Library'))
+                        Path(PurePath(to_folder, r'Library')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Library', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', file))
