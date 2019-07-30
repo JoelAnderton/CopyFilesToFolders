@@ -294,7 +294,7 @@ def get_submit(event=None):
                  
                 # if Library, Individual, and Image checked
                 elif siteCheck.get()==False and libCheck.get() and indivCheck.get() and imagesCheck.get():
-                    if Path(PurePath(to_folder, r'Library', indiv_folder, r'Images')):
+                    if Path(PurePath(to_folder, r'Library', indiv_folder, r'Images')).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Library', indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder +',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', indiv_folder, r'Images', file))
@@ -328,7 +328,7 @@ def get_submit(event=None):
                  
                 # if Site, Individual, and Image all checked
                 elif siteCheck.get() and libCheck.get()==False and indivCheck.get() and imagesCheck.get():
-                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images')):
+                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images')).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
@@ -360,7 +360,7 @@ def get_submit(event=None):
 
                  # if Site, Library, and Image checked
                 elif siteCheck.get() and libCheck.get() and indivCheck.get()==False and imagesCheck.get():
-                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images',)):
+                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images',)).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
@@ -392,7 +392,7 @@ def get_submit(event=None):
 
                 # if Site and Image checked
                 elif siteCheck.get() and libCheck.get()==False and indivCheck.get()==False and imagesCheck.get():
-                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images')):
+                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images')).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Images', file))
@@ -424,7 +424,7 @@ def get_submit(event=None):
 
                  # if Individual and Image checked
                 elif siteCheck.get()==False and libCheck.get()==False and indivCheck.get() and imagesCheck.get():
-                    if Path(PurePath(to_folder, indiv_folder, r'Images')):
+                    if Path(PurePath(to_folder, indiv_folder, r'Images')).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, indiv_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, indiv_folder, r'Images', file))
@@ -456,7 +456,7 @@ def get_submit(event=None):
 
                  # if Library and Image checked
                 elif siteCheck.get()==False and libCheck.get() and indivCheck.get()==False and imagesCheck.get():
-                    if Path(PurePath(to_folder, r'Library', r'Images')):
+                    if Path(PurePath(to_folder, r'Library', r'Images')).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Library', r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', r'Images', file))
@@ -488,7 +488,7 @@ def get_submit(event=None):
 
                 # Image only
                 elif siteCheck.get()==False and libCheck.get()==False and indivCheck.get()==False and imagesCheck.get():
-                    if Path(PurePath(to_folder, r'Images')):
+                    if Path(PurePath(to_folder, r'Images')).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Images', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Images', file))
@@ -511,7 +511,7 @@ def get_submit(event=None):
 
                 # if Site, Library, and Individual checked
                 elif siteCheck.get() and libCheck.get() and indivCheck.get() and imagesCheck.get()==False:
-                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder)):
+                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder)).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', indiv_folder, file))
@@ -552,7 +552,7 @@ def get_submit(event=None):
                  
                 # if Library, and Individual checked    
                 elif siteCheck.get()==False and libCheck.get() and indivCheck.get() and imagesCheck.get()==False:
-                    if Path(PurePath(to_folder, r'Library', indiv_folder)):
+                    if Path(PurePath(to_folder, r'Library', indiv_folder)).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Library', indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', indiv_folder, file))
@@ -584,7 +584,7 @@ def get_submit(event=None):
                  
                 # if Site and Individual  checked
                 elif siteCheck.get() and libCheck.get()==False and indivCheck.get() and imagesCheck.get()==False:
-                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder)):
+                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder)).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, file))
@@ -616,7 +616,7 @@ def get_submit(event=None):
 
                  # if Site  and Library  checked
                 elif siteCheck.get() and libCheck.get() and indivCheck.get()==False and imagesCheck.get()==False:
-                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library')):
+                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library')).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', file))
@@ -648,7 +648,7 @@ def get_submit(event=None):
 
                 # if Site only checked
                 elif siteCheck.get() and libCheck.get()==False and indivCheck.get()==False and imagesCheck.get()==False:
-                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))):
+                    if Path(PurePath(to_folder, site_dic.get(file[0:2].upper()))).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, site_dic.get(file[0:2].upper()), file))
@@ -671,7 +671,7 @@ def get_submit(event=None):
 
                  # if Individual only checked
                 elif siteCheck.get()==False and libCheck.get()==False and indivCheck.get() and imagesCheck.get()==False:
-                    if Path(PurePath(to_folder, indiv_folder)):
+                    if Path(PurePath(to_folder, indiv_folder)).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, indiv_folder, file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, indiv_folder, file))
@@ -694,7 +694,7 @@ def get_submit(event=None):
 
                 # if Library only checked
                 elif siteCheck.get()==False and libCheck.get() and indivCheck.get()==False and imagesCheck.get()==False:
-                    if Path(PurePath(to_folder, r'Library')):
+                    if Path(PurePath(to_folder, r'Library')).exists():
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, r'Library', file))
                             moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + PurePath(root, file) + ',' + PurePath(to_folder, r'Library', file))
