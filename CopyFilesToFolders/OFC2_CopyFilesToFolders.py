@@ -35,7 +35,7 @@
 #       - Added "Mode" option to change between "Keep Originals" and "Remove Originals"
 #   7/24/2019
 #       - Fixed log.csv spaces that show in the front of string in each cell
-#       - Improved handleing path using pathlib (to prevent MacOS and Windows issues)
+#       - Improved handling file paths using pathlib (to prevent MacOS and Windows issues)
 #########################################################################################
 from tkinter import *
 from tkinter import ttk
@@ -172,7 +172,7 @@ def get_about(event=None):
     7/20/2019 v. 4.1
     - Added "Mode" option to change between "Keep Originals" and 
       "Remove Originals"
-    - Improved handleing path
+    - Improved handling file paths
     - Minor bug fixes
     ''')
 
