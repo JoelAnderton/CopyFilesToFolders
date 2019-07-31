@@ -143,7 +143,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     OFC2 Copy Files to Folders
-    version: 4.1
+    version: 4.2
     
     Only works with files with OFC2 style StudyIDs
     The first 7 characters of the file must be the StudyID
@@ -169,7 +169,7 @@ def get_about(event=None):
       extensions
     - Create a log of all file moves
     
-    7/20/2019 v. 4.1
+    7/20/2019 v. 4.2
     - Added "Mode" option to change between "Keep Originals" and 
       "Remove Originals"
     - Improved handling file paths
@@ -324,6 +324,16 @@ def get_submit(event=None):
                             shutil.copy2(PurePath(root, file), PurePath(to_folder, r'Library', indiv_folder, r'Images', file))
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, r'Library', indiv_folder, r'Images', file)))
 
+                    elif Path(PurePath(to_folder, r'Library', indiv_folder, r'Images')).exists() == False:
+                          #  os.chdir(PurePath(to_folder,  r'Library'))
+                        Path(PurePath(to_folder,  r'Library', indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(PurePath(root, file), PurePath(to_folder,  r'Library', indiv_folder, r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, r'Library', indiv_folder, r'Images', file)))
+                        else:
+                            shutil.copy2(PurePath(root, file), PurePath(to_folder, r'Library', indiv_folder, r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, r'Library', indiv_folder, r'Images', file)))
+
                     else:
                         print('Error 2 -  Check where site=False, library=True, and individual=True')
                         continue         
@@ -348,6 +358,15 @@ def get_submit(event=None):
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file)))
 
                     elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder)).exists() == False:
+                        Path(PurePath(to_folder,  site_dic.get(file[0:2].upper()), indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file)))
+                        else:
+                            shutil.copy2(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file)))
+
+                    elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images')).exists() == False:
                         Path(PurePath(to_folder,  site_dic.get(file[0:2].upper()), indiv_folder, r'Images')).mkdir(parents=True, exist_ok=True)
                         if mode_dd_combo.get() == 'Remove Originals':
                             shutil.move(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), indiv_folder, r'Images', file))
@@ -388,6 +407,15 @@ def get_submit(event=None):
                             shutil.copy2(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
                             moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file)))
 
+                    elif Path(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images')).exists() == False:
+                        Path(PurePath(to_folder,  site_dic.get(file[0:2].upper()), r'Library', r'Images')).mkdir(parents=True, exist_ok=True)
+                        if mode_dd_combo.get() == 'Remove Originals':
+                            shutil.move(PurePath(root, file), PurePath(to_folder,  site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
+                            moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file)))
+                        else:
+                            shutil.copy2(PurePath(root, file), PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file))
+                            moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' + str(PurePath(to_folder, site_dic.get(file[0:2].upper()), r'Library', r'Images', file)))
+                            
                     else:
                         print('Error 4 -  Check where site=True, library=True, and individual=False')
                         continue 
@@ -856,7 +884,7 @@ def background_color(event):
 
 # Creates main window
 root = Tk()
-root.title('OFC2 Copy Files To Folders v. 4.1')
+root.title('OFC2 Copy Files To Folders v. 4.2')
 root.geometry('450x500+500+200')
 
 # creates variables in window
