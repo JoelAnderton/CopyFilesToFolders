@@ -18,7 +18,10 @@
 #       - Make code cross platform
 #       - Add "Specify File Name" section
 #       - Create log files
-#       - Change between modes       
+#       - Change between modes            
+#   8/15/2019
+#       - Improved handling file paths using pathlib (to prevent MacOS and Windows issues)
+#       - Empty folders are deleted if "Remove Originals" is selected
 #########################################################################################
 from tkinter import *
 from tkinter import ttk
@@ -169,6 +172,10 @@ def get_about(event=None):
     - Added logging feature
     - Minor bug fixes
     - Updated version to be in sync with OFC2
+
+    8/15/2019 - v. 4.3
+    - Improved handling file paths 
+    - Empty folders are deleted if "Remove Originals" is selected
     ''')
 
 
@@ -383,7 +390,7 @@ def get_submit(event=None):
                                 shutil.move(PurePath(root, file), PurePath(to_folder, file[0:8], get_visitFolder(file), file))
                                 moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' +  str(PurePath(to_folder, file[0:8], get_visitFolder(file), file)))
                                 if len(os.listdir(root)) == 0: 
-                                os.rmdir(root)
+                                    os.rmdir(root)
                             else:
                                 shutil.copy2(os.path.join(root, file), os.path.join(to_folder, file[0:8], get_visitFolder(file), file))
                                 moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' +  str(PurePath(to_folder, file[0:8], get_visitFolder(file), file)))
@@ -395,7 +402,7 @@ def get_submit(event=None):
                                 shutil.move(PurePath(root, file), PurePath(to_folder, file[0:8], get_visitFolder(file), file))
                                 moved_files.append('Success Move!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' +  str(PurePath(to_folder, file[0:8], get_visitFolder(file), file)))
                                 if len(os.listdir(root)) == 0: 
-                                os.rmdir(root)
+                                    os.rmdir(root)
                             else:
                                 shutil.copy2(PurePath(root, file), PurePath(to_folder, file[0:8], get_visitFolder(file), file))
                                 moved_files.append('Success Copy!, ' + str(datetime.datetime.now()) + ',' + indiv_folder + ',' + str(PurePath(root, file)) + ',' +  str(PurePath(to_folder, file[0:8], get_visitFolder(file), file)))
@@ -588,7 +595,7 @@ def background_color(event):
 
 # Creates main window
 root = Tk()
-root.title('COHRA2 Copy Files To Folders v. 4.1')
+root.title('COHRA2 Copy Files To Folders v. 4.3')
 
 
 # creates variables in window
