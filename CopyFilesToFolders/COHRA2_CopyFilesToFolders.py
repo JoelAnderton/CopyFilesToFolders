@@ -144,7 +144,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     COHRA2 Copy Files to Folders
-    version: 4.1
+    version: 4.2
     
     Only works with files with COHRA2 
     style SubjectIDs.The first 8 
