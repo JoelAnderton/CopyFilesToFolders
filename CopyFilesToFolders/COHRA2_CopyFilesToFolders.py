@@ -173,7 +173,7 @@ def get_about(event=None):
     - Minor bug fixes
     - Updated version to be in sync with OFC2
 
-    8/15/2019 - v. 4.3
+    8/15/2019 - v. 4.2
     - Improved handling file paths 
     - Empty folders are deleted if "Remove Originals" is selected
     ''')
@@ -595,7 +595,7 @@ def background_color(event):
 
 # Creates main window
 root = Tk()
-root.title('COHRA2 Copy Files To Folders v. 4.3')
+root.title('COHRA2 Copy Files To Folders v. 4.2')
 
 
 # creates variables in window
