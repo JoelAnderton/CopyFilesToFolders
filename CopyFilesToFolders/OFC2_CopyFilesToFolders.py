@@ -38,6 +38,8 @@
 #       - Improved handling file paths using pathlib (to prevent MacOS and Windows issues)
 #   8/12/2019
 #       - Empty folders are deleted if "Remove Originals" is selected
+#   1/20/2020
+#       - Added "Completed" message box to pop up when program is finished
 #########################################################################################
 from tkinter import *
 from tkinter import ttk
@@ -145,7 +147,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     OFC2 Copy Files to Folders
-    version: 4.3
+    version: 4.4
     
     Only works with files with OFC2 style StudyIDs
     The first 7 characters of the file must be the StudyID
@@ -179,6 +181,9 @@ def get_about(event=None):
 
     8/12/2019 v. 4.3
     - Empty folders are deleted if "Remove Originals" is selected
+    
+    1/20/2020 v 4.4
+    - "Completed" message box pops up when program is done.
     ''')
 
 
@@ -985,7 +990,7 @@ def background_color(event):
 
 # Creates main window
 root = Tk()
-root.title('OFC2 Copy Files To Folders v. 4.3')
+root.title('OFC2 Copy Files To Folders v. 4.4')
 root.geometry('450x500+500+200')
 
 # creates variables in window
