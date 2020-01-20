@@ -875,6 +875,9 @@ def get_submit(event=None):
            for id in diff:
                 unable_to_move.append(id)        
 
+    messagebox.showinfo('Completed', 'Completed')
+    print('Completed!')
+
     # Continuous log
     contin_log(moved_files, unable_to_move)
 
