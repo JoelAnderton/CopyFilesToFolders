@@ -40,6 +40,8 @@
 #       - Empty folders are deleted if "Remove Originals" is selected
 #   1/20/2020
 #       - Added "Completed" message box to pop up when program is finished
+#   4/29/2020
+#       - Defaulted the Create Log checkbox to be checked.
 #########################################################################################
 from tkinter import *
 from tkinter import ttk
@@ -147,7 +149,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     OFC2 Copy Files to Folders
-    version: 4.4
+    version: 4.5
     
     Only works with files with OFC2 style StudyIDs
     The first 7 characters of the file must be the StudyID
@@ -157,33 +159,29 @@ def get_about(event=None):
     - Made it into a GUI!
       (previous "MoveFiles" program was a console app)
     - Allowed for various OFC2 style subfolders to be made
-
     12/19/2018 v. 2.2:
     - Added the option use a .csv file to limit StudyIDs to copy
-
     4/5/2019 v. 2.3:
     - Added option to create an "Images" subfolder
     - Made it so that StudyIDs in the filename become uppercase when
       the file moves
     - Does not matter if the StudyIDs in a .csv file has StudyIDs as upper 
       or lower case
-
     6/3/2019 v. 3.1:
     - Added the option to specify file naming conventions or file 
       extensions
-    - Create a log of all file moves
-    
-    7/20/2019 v. 4.2
+    - Create a log of all file moves  
+    7/20/2019 v. 4.2:
     - Added "Mode" option to change between "Keep Originals" and 
       "Remove Originals"
     - Improved handling file paths
     - Minor bug fixes
-
-    8/12/2019 v. 4.3
+    8/12/2019 v. 4.3:
     - Empty folders are deleted if "Remove Originals" is selected
-    
-    1/20/2020 v 4.4
+    1/20/2020 v 4.4:
     - "Completed" message box pops up when program is done.
+    4/29/2020 v.4.5:
+    - Defaulted the Create Log checkbox to be checked.
     ''')
 
 
@@ -990,7 +988,7 @@ def background_color(event):
 
 # Creates main window
 root = Tk()
-root.title('OFC2 Copy Files To Folders v. 4.4')
+root.title('OFC2 Copy Files To Folders v. 4.5')
 root.geometry('450x500+500+200')
 
 # creates variables in window
@@ -1004,6 +1002,7 @@ siteCheck = BooleanVar()
 indivCheck = BooleanVar()
 imagesCheck = BooleanVar()
 logCheck = BooleanVar()
+logCheck.set(True)
 
 # WINDOWS
 if get_platform() == 'Windows':
