@@ -608,6 +608,7 @@ imagesCheck = BooleanVar()
 csv_path = StringVar()
 specifyBox = StringVar()
 logCheck = BooleanVar()
+logCheck.set(True)
 
 
 # WINDOWS
