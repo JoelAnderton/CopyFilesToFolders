@@ -22,6 +22,11 @@
 #   8/15/2019
 #       - Improved handling file paths using pathlib (to prevent MacOS and Windows issues)
 #       - Empty folders are deleted if "Remove Originals" is selected
+#   5/22/2020
+#       - Added "Completed" message box to pop up when program is finished
+#       - Defaulted the Create Log checkbox to be checked.
+#       - Fixed program to use "fromEntry" and "toEntry" for the path of folders so that 
+#         the fields can be manually updated 
 #########################################################################################
 from tkinter import *
 from tkinter import ttk
@@ -144,7 +149,7 @@ def get_about(event=None):
     Created date: 12/17/2018
 
     COHRA2 Copy Files to Folders
-    version: 4.2
+    version: 4.5
     
     Only works with files with COHRA2 
     style SubjectIDs.The first 8 
@@ -176,6 +181,12 @@ def get_about(event=None):
     8/15/2019 - v. 4.2
     - Improved handling file paths 
     - Empty folders are deleted if "Remove Originals" is selected
+
+    5/22/2020 - v. 4.5
+    - Added "Completed" message box to pop up when program is finished
+    - Defaulted the Create Log checkbox to be checked.
+    - Fixed program to use "fromEntry" and "toEntry" for the path of folders so that 
+    the fields can be manually updated 
     ''')
 
 
@@ -598,7 +609,7 @@ def background_color(event):
 
 # Creates main window
 root = Tk()
-root.title('COHRA2 Copy Files To Folders v. 4.2')
+root.title('COHRA2 Copy Files To Folders v. 4.5')
 
 
 # creates variables in window
