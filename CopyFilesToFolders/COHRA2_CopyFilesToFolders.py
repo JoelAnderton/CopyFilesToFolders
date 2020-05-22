@@ -185,8 +185,7 @@ def get_about(event=None):
     5/22/2020 - v. 4.5
     - Added "Completed" message box to pop up when program is finished
     - Defaulted the Create Log checkbox to be checked.
-    - Fixed program to use "fromEntry" and "toEntry" for the path of folders so that 
-    the fields can be manually updated 
+    - Can manually update From Here and To Here fields. 
     ''')
 
 
