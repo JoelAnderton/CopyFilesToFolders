@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>8940054e-141e-49ae-8f4c-6f3ba0e97fef</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>COHRA2_CopyFilesToFolders.py</StartupFile>
+    <StartupFile>OFC2_CopyFilesToFolders.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
